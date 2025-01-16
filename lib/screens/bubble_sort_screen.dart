@@ -3,7 +3,7 @@ import 'package:howgorithm/widgets/algorithm_app_bar.dart';
 import 'package:howgorithm/widgets/algorithm_card.dart';
 import 'package:howgorithm/extensions/snackbar_extension.dart';
 
-//?? A simple model to store each bubble sort step’s snapshot + description
+//?? model ngestore tiap snap shot bubble sort nya + description
 class _BubbleSortStep {
   final List<double> arraySnapshot;
   final String description;
@@ -169,40 +169,36 @@ class _BubbleSortScreenState extends State<BubbleSortScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        //?? Previous Button
+        // Previous button
         ElevatedButton.icon(
-          onPressed: _currentStep > 0
-              ? () {
-                  setState(() {
-                    _currentStep--;
-                  });
-                }
-              : null,
-          label: const Icon(
-            Icons.skip_previous_outlined,
-            size: 30,
-          ),
-        ),
-        //?? step indicator (e.g. "Step 2 of 10")
+            onPressed: _hasSteps && _currentStep > 0
+                ? () {
+                    setState(() {
+                      _currentStep--;
+                    });
+                  }
+                : null,
+            label: const Icon(Icons.skip_previous_outlined,
+                size: 30) // empty label so the icon is centered
+            ),
+        // Step indicator
         if (_hasSteps)
           Text(
             'Step $_currentStep of ${_steps.length - 1}',
             style: const TextStyle(fontSize: 16),
-          ),
-        if (!_hasSteps) const Text('-', style: TextStyle(fontSize: 16)),
-        //?? next Button
+          )
+        else
+          const Text('-', style: TextStyle(fontSize: 16, color: Colors.white)),
+        // Next button
         ElevatedButton.icon(
-          onPressed: _currentStep < _steps.length - 1
+          onPressed: _hasSteps && _currentStep < _steps.length - 1
               ? () {
                   setState(() {
                     _currentStep++;
                   });
                 }
               : null,
-          label: const Icon(
-            Icons.skip_next_outlined,
-            size: 30,
-          ),
+          label: const Icon(Icons.skip_next_outlined, size: 30), // empty label
         ),
       ],
     );

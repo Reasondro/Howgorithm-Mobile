@@ -44,7 +44,7 @@ class AlgorithmsScreen extends StatelessWidget {
             style: Theme.of(context).textTheme.titleSmall,
             textAlign: TextAlign.center,
           ),
-          // const SizedBox(height: 16),
+          const SizedBox(height: 5),
           Expanded(
             child: GridView.builder(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
