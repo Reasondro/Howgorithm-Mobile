@@ -79,7 +79,7 @@ class _BubbleSortScreenState extends State<BubbleSortScreen> {
         //? step indicator (e.g. "Step 2 of 10")
         if (_hasSteps)
           Text(
-            'Step ${_currentStep + 1} of ${_steps.length}',
+            'Step $_currentStep of ${_steps.length - 1}',
             style: const TextStyle(fontSize: 16),
           ),
 
