@@ -3,12 +3,18 @@ import 'package:howgorithm/widgets/algorithm_app_bar.dart';
 import 'package:howgorithm/widgets/algorithm_card.dart';
 import 'package:howgorithm/extensions/snackbar_extension.dart';
 
-//? A simple model to store each bubble sort step’s snapshot + description
+//?? A simple model to store each bubble sort step’s snapshot + description
 class _BubbleSortStep {
   final List<double> arraySnapshot;
   final String description;
 
-  _BubbleSortStep(this.arraySnapshot, this.description);
+  final List<int> highlightIndices;
+
+  _BubbleSortStep(
+    this.arraySnapshot,
+    this.description, {
+    this.highlightIndices = const [],
+  });
 }
 
 class BubbleSortScreen extends StatefulWidget {
@@ -22,92 +28,13 @@ class BubbleSortScreen extends StatefulWidget {
 
 class _BubbleSortScreenState extends State<BubbleSortScreen> {
   final TextEditingController _controller = TextEditingController();
-  //? list of step snapshots for the bubble sort
+
   List<_BubbleSortStep> _steps = [];
-  //? current step index
   int _currentStep = 0;
 
   bool get _hasSteps => _steps.isNotEmpty;
 
-  //? “visualization” portion for the current step
-  Widget _buildVisualization(_BubbleSortStep step) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        //? show current array snapshot
-        Text(
-          step.arraySnapshot.toString(),
-          style: TextStyle(
-            color: Theme.of(context).colorScheme.tertiaryContainer,
-            fontSize: 25,
-          ),
-        ),
-        const SizedBox(height: 10),
-        //? show step description
-        Text(
-          step.description,
-          style: TextStyle(
-            color: Theme.of(context).colorScheme.onPrimary,
-            fontSize: 16,
-          ),
-          textAlign: TextAlign.center,
-        ),
-      ],
-    );
-  }
-
-  //? builds Previous/Next buttons + step indicator
-  Widget _buildControls() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        //? Previous Button
-        ElevatedButton.icon(
-          onPressed: _currentStep > 0
-              ? () {
-                  setState(() {
-                    _currentStep--;
-                  });
-                }
-              : null, //? disabled if first step
-          label: const Icon(
-            Icons.skip_previous_outlined,
-            size: 30,
-          ),
-        ),
-
-        //? step indicator (e.g. "Step 2 of 10")
-        if (_hasSteps)
-          Text(
-            'Step $_currentStep of ${_steps.length - 1}',
-            style: const TextStyle(fontSize: 16),
-          ),
-
-        if (!_hasSteps)
-          const Text(
-            '-',
-            style: TextStyle(fontSize: 16),
-          ),
-
-        //? next Button
-        ElevatedButton.icon(
-          onPressed: _currentStep < _steps.length - 1
-              ? () {
-                  setState(() {
-                    _currentStep++;
-                  });
-                }
-              : null, //? disbale if last step
-          label: const Icon(
-            Icons.skip_next_outlined,
-            size: 30,
-          ),
-        ),
-      ],
-    );
-  }
-
-  //? parse input, run bubble sort step-by-step,  store steps
+  //?? parse input, run bubble sort step-by-step,  store steps
   void _computeSteps() {
     final rawInput = _controller.text.trim();
     if (rawInput.isEmpty) {
@@ -122,6 +49,7 @@ class _BubbleSortScreenState extends State<BubbleSortScreen> {
         doubleList.add(val);
       } else {
         context.customShowErrorSnackBar('Please enter a valid array');
+        return; //? or continue if you want to skip invalid
       }
     }
 
@@ -130,27 +58,24 @@ class _BubbleSortScreenState extends State<BubbleSortScreen> {
     setState(() {});
   }
 
-  //? return list of all intermediate steps (array snapshot + description)
+  //?? return list of all intermediate steps (array snapshot + description)
   List<_BubbleSortStep> _bubbleSortWithSnapshots(List<double> inputArray) {
     final steps = <_BubbleSortStep>[];
-
-    //? copy  array --> doesnt mutate the original
     final arr = List<double>.from(inputArray);
 
-    //? record  initial state
     steps.add(_BubbleSortStep(
       List<double>.from(arr),
       'Initial array: ${arr.join(", ")}',
     ));
 
-    //? bubble sort
     for (int i = 0; i < arr.length - 1; i++) {
       for (int j = 0; j < arr.length - i - 1; j++) {
-        //? compare arr[j] & arr[j+1]
+        //? [NEW] highlight the two indices being compared
         steps.add(_BubbleSortStep(
           List<double>.from(arr),
           'Comparing indices [$j] and [${j + 1}]:\n'
           '${arr[j]} & ${arr[j + 1]}',
+          highlightIndices: [j, j + 1],
         ));
 
         if (arr[j] > arr[j + 1]) {
@@ -159,15 +84,16 @@ class _BubbleSortScreenState extends State<BubbleSortScreen> {
           arr[j] = arr[j + 1];
           arr[j + 1] = temp;
 
+          //? [NEW] highlight the same indices after swap
           steps.add(_BubbleSortStep(
             List<double>.from(arr),
             'Swapped elements at indices [$j] and [${j + 1}]:\n'
             '${arr[j]} <-> ${arr[j + 1]}',
+            highlightIndices: [j, j + 1],
           ));
         }
       }
 
-      //? end of loop
       steps.add(_BubbleSortStep(
         List<double>.from(arr),
         'End of loop ${i + 1}',
@@ -175,6 +101,111 @@ class _BubbleSortScreenState extends State<BubbleSortScreen> {
     }
 
     return steps;
+  }
+
+  //?? [NEW] Build the “visualization” with an AnimatedSwitcher and highlighted boxes
+  Widget _buildVisualization(_BubbleSortStep step) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        AnimatedSwitcher(
+          duration: const Duration(milliseconds: 300),
+          transitionBuilder: (child, animation) {
+            return FadeTransition(opacity: animation, child: child);
+          },
+          //? A unique key so that each step triggers a new animation
+          child: _buildArrayRow(step, key: ValueKey(step)),
+        ),
+        const SizedBox(height: 10),
+        //? Step description
+        Text(
+          step.description,
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.onPrimary,
+            fontSize: 16,
+          ),
+          textAlign: TextAlign.center,
+        ),
+      ],
+    );
+  }
+
+  //? [NEW] Display each element in a colored container
+  Widget _buildArrayRow(_BubbleSortStep step, {Key? key}) {
+    return Row(
+      key: key,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        for (int i = 0; i < step.arraySnapshot.length; i++)
+          _buildNumberBox(
+            value: step.arraySnapshot[i],
+            isHighlighted: step.highlightIndices.contains(i),
+          ),
+      ],
+    );
+  }
+
+  //? [NEW] A single colored box for one number
+  Widget _buildNumberBox({required double value, required bool isHighlighted}) {
+    final boxColor = isHighlighted
+        ? Theme.of(context).colorScheme.tertiary
+        : Colors.grey[800];
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 4),
+      padding: const EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        color: boxColor,
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Text(
+        value.toString(),
+        style: const TextStyle(color: Colors.white, fontSize: 16),
+      ),
+    );
+  }
+
+  //?? builds Previous/Next buttons + step indicator
+  Widget _buildControls() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        //?? Previous Button
+        ElevatedButton.icon(
+          onPressed: _currentStep > 0
+              ? () {
+                  setState(() {
+                    _currentStep--;
+                  });
+                }
+              : null,
+          label: const Icon(
+            Icons.skip_previous_outlined,
+            size: 30,
+          ),
+        ),
+        //?? step indicator (e.g. "Step 2 of 10")
+        if (_hasSteps)
+          Text(
+            'Step $_currentStep of ${_steps.length - 1}',
+            style: const TextStyle(fontSize: 16),
+          ),
+        if (!_hasSteps) const Text('-', style: TextStyle(fontSize: 16)),
+        //?? next Button
+        ElevatedButton.icon(
+          onPressed: _currentStep < _steps.length - 1
+              ? () {
+                  setState(() {
+                    _currentStep++;
+                  });
+                }
+              : null,
+          label: const Icon(
+            Icons.skip_next_outlined,
+            size: 30,
+          ),
+        ),
+      ],
+    );
   }
 
   @override
@@ -203,7 +234,7 @@ class _BubbleSortScreenState extends State<BubbleSortScreen> {
                 decoration: const InputDecoration(
                   labelText: 'Enter an array (comma-separated)',
                   border: OutlineInputBorder(),
-                  hintText: 'e.g. 5,1,51,5,16',
+                  hintText: 'e.g. 5,1,51,5.5,16.3',
                 ),
                 keyboardType: TextInputType.text,
               ),
@@ -217,9 +248,10 @@ class _BubbleSortScreenState extends State<BubbleSortScreen> {
                 child: Text(
                   'Compute Bubble Sort Steps',
                   style: TextStyle(
-                      fontSize: 14,
-                      color: Theme.of(context).colorScheme.inversePrimary,
-                      fontWeight: FontWeight.w600),
+                    fontSize: 14,
+                    color: Theme.of(context).colorScheme.inversePrimary,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
               const SizedBox(height: 16),
@@ -227,8 +259,9 @@ class _BubbleSortScreenState extends State<BubbleSortScreen> {
                 child: Container(
                   width: double.infinity,
                   decoration: BoxDecoration(
-                      color: Colors.black,
-                      borderRadius: BorderRadius.circular(16)),
+                    color: Colors.black,
+                    borderRadius: BorderRadius.circular(16),
+                  ),
                   child: _hasSteps
                       ? _buildVisualization(_steps[_currentStep])
                       : const Center(
@@ -240,14 +273,8 @@ class _BubbleSortScreenState extends State<BubbleSortScreen> {
                         ),
                 ),
               ),
-              if (_hasSteps) ...[
-                const SizedBox(height: 16),
-                _buildControls(),
-              ],
-              if (!_hasSteps) ...[
-                const SizedBox(height: 16),
-                _buildControls(),
-              ]
+              const SizedBox(height: 16),
+              _buildControls(),
             ],
           ),
         ),
