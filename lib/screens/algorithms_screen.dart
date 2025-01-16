@@ -29,7 +29,8 @@ class AlgorithmsScreen extends StatelessWidget {
       {
         'title': 'Binary Search',
         'description': 'Quickly search for an element in a sorted array.',
-        'icon': Icons.sync_alt_outlined,
+        // 'icon': Icons.sync_alt_outlined,
+        'icon': Icons.switch_left_outlined,
         'route': Routes.nestedBinarySearchScreen,
       },
       // Add more algorithms here if needed
