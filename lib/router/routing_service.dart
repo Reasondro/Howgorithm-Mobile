@@ -4,6 +4,7 @@ import 'package:howgorithm/screens/algorithms_screen.dart';
 import 'package:howgorithm/screens/auth_screen.dart';
 
 import 'package:howgorithm/screens/home_screen.dart';
+import 'package:howgorithm/screens/lab_screen.dart';
 // import 'package:howgorithm/screens/lab_screen.dart';
 import 'package:howgorithm/screens/profile_screen.dart';
 import 'package:howgorithm/layouts/layout_scaffold_with_nav.dart';
@@ -13,6 +14,9 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey =
     GlobalKey<NavigatorState>(debugLabel: 'root');
+
+final GlobalKey<NavigatorState> _rootWithoutNavigatorKey =
+    GlobalKey<NavigatorState>(debugLabel: 'rootWithoutNav');
 
 class RoutingService {
   final GoRouter router = GoRouter(
@@ -55,39 +59,53 @@ class RoutingService {
               GoRoute(
                 name: "Home",
                 path: Routes.homeScreen,
-                // builder: (context, state) => const HomeScreen(),
-                pageBuilder: (context, state) {
-                  return const NoTransitionPage(child: HomeScreen());
-                },
+                builder: (context, state) => const HomeScreen(),
+                // pageBuilder: (context, state) {
+                //   return const NoTransitionPage(child: HomeScreen());
+                // },
               ),
             ],
           ),
           StatefulShellBranch(routes: [
             GoRoute(
-                name: "Algorithms",
-                path: Routes.algorithmsScreen,
-                pageBuilder: (context, state) {
-                  return const NoTransitionPage(
-                    child: AlgorithmsScreen(),
-                  );
-                }),
+              name: "Algorithms",
+              path: Routes.algorithmsScreen,
+              builder: (context, state) => const AlgorithmsScreen(),
+              // pageBuilder: (context, state) {
+              //   return const NoTransitionPage(
+              //     child: AlgorithmsScreen(),
+              //   );
+              // },
+              routes: [
+                GoRoute(
+                    name: "Bubble Sort",
+                    parentNavigatorKey: _rootNavigatorKey,
+                    path: Routes.bubbleSortScreen,
+                    builder: (context, state) {
+                      return const LabScreen(algorithm: "bubble");
+                    })
+              ],
+            ),
           ]),
           StatefulShellBranch(routes: [
             GoRoute(
-                name: "Profile",
-                path: Routes.profileScreen,
-                pageBuilder: (context, state) {
-                  return const NoTransitionPage(child: ProfileScreen());
-                  // return NoTransitionPage(child: NoteScreen());
-                }),
+              name: "Profile",
+              path: Routes.profileScreen,
+              builder: (context, state) => const ProfileScreen(),
+              // pageBuilder: (context, state) {
+              //   return const NoTransitionPage(child: ProfileScreen());
+              // },
+            ),
           ])
         ],
       ),
       GoRoute(
           path: Routes.authScreen,
-          pageBuilder: (context, state) {
-            return const NoTransitionPage(child: AuthScreen());
-          })
+          builder: (context, state) => const AuthScreen()
+          // pageBuilder: (context, state) {
+          //   return const NoTransitionPage(child: AuthScreen());
+          // },
+          )
     ],
   );
 }

@@ -40,18 +40,27 @@ class _LabScreenState extends State<LabScreen> {
       content = const Text('Unknown Algorithm');
     }
 
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        children: [
-          // Show whichever algorithm widget was chosen
-          Expanded(child: content),
-          // Next step button
-          ElevatedButton(
-            onPressed: nextStep,
-            child: const Text('Next Step'),
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // Show whichever algorithm widget was chosen
+              // Expanded(child: content),
+              // // Next step button
+              content,
+              ElevatedButton(
+                onPressed: nextStep,
+                child: const Text('Next Step'),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
