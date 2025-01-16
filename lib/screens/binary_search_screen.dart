@@ -144,6 +144,8 @@ class BinarySearchScreenState extends State<BinarySearchScreen> {
         return;
       }
     }
+    // ? sort for dumb users
+    doubleList.sort();
 
     //? parase target
     final targetVal = double.tryParse(rawTarget);
