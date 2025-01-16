@@ -4,10 +4,10 @@ import 'package:howgorithm/screens/algorithms_screen.dart';
 import 'package:howgorithm/screens/auth_screen.dart';
 import 'package:howgorithm/screens/binary_search_screen.dart';
 import 'package:howgorithm/screens/bubble_sort_screen.dart';
+import 'package:howgorithm/screens/classical_search_screen.dart';
 
 import 'package:howgorithm/screens/home_screen.dart';
-import 'package:howgorithm/screens/lab_screen.dart';
-// import 'package:howgorithm/screens/lab_screen.dart';
+import 'package:howgorithm/screens/merge_sort_screen.dart';
 import 'package:howgorithm/screens/profile_screen.dart';
 import 'package:howgorithm/layouts/layout_scaffold_with_nav.dart';
 import 'package:howgorithm/router/routes.dart';
@@ -16,9 +16,6 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey =
     GlobalKey<NavigatorState>(debugLabel: 'root');
-
-final GlobalKey<NavigatorState> _rootWithoutNavigatorKey =
-    GlobalKey<NavigatorState>(debugLabel: 'rootWithoutNav');
 
 class RoutingService {
   final GoRouter router = GoRouter(
@@ -77,6 +74,22 @@ class RoutingService {
                   path: Routes.bubbleSortScreen,
                   builder: (context, state) {
                     return const BubbleSortScreen();
+                  },
+                ),
+                GoRoute(
+                  name: "Merge Sort",
+                  parentNavigatorKey: _rootNavigatorKey,
+                  path: Routes.mergeSortScreen,
+                  builder: (context, state) {
+                    return const MergeSortScreen();
+                  },
+                ),
+                GoRoute(
+                  name: "Classical Search",
+                  parentNavigatorKey: _rootNavigatorKey,
+                  path: Routes.classicalSearchScreen,
+                  builder: (context, state) {
+                    return const ClassicalSearchScreen();
                   },
                 ),
                 GoRoute(
