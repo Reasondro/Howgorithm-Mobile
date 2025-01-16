@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:howgorithm/screens/algorithms_screen.dart';
 import 'package:howgorithm/screens/auth_screen.dart';
+import 'package:howgorithm/screens/binary_search_screen.dart';
+import 'package:howgorithm/screens/bubble_sort_screen.dart';
 
 import 'package:howgorithm/screens/home_screen.dart';
 import 'package:howgorithm/screens/lab_screen.dart';
@@ -60,9 +62,6 @@ class RoutingService {
                 name: "Home",
                 path: Routes.homeScreen,
                 builder: (context, state) => const HomeScreen(),
-                // pageBuilder: (context, state) {
-                //   return const NoTransitionPage(child: HomeScreen());
-                // },
               ),
             ],
           ),
@@ -71,19 +70,23 @@ class RoutingService {
               name: "Algorithms",
               path: Routes.algorithmsScreen,
               builder: (context, state) => const AlgorithmsScreen(),
-              // pageBuilder: (context, state) {
-              //   return const NoTransitionPage(
-              //     child: AlgorithmsScreen(),
-              //   );
-              // },
               routes: [
                 GoRoute(
-                    name: "Bubble Sort",
-                    parentNavigatorKey: _rootNavigatorKey,
-                    path: Routes.bubbleSortScreen,
-                    builder: (context, state) {
-                      return const LabScreen(algorithm: "bubble");
-                    })
+                  name: "Bubble Sort",
+                  parentNavigatorKey: _rootNavigatorKey,
+                  path: Routes.bubbleSortScreen,
+                  builder: (context, state) {
+                    return const BubbleSortScreen();
+                  },
+                ),
+                GoRoute(
+                  name: "Binary Search",
+                  parentNavigatorKey: _rootNavigatorKey,
+                  path: Routes.binarySearchScreen,
+                  builder: (context, state) {
+                    return const BinarySearchScreen();
+                  },
+                )
               ],
             ),
           ]),
@@ -92,20 +95,13 @@ class RoutingService {
               name: "Profile",
               path: Routes.profileScreen,
               builder: (context, state) => const ProfileScreen(),
-              // pageBuilder: (context, state) {
-              //   return const NoTransitionPage(child: ProfileScreen());
-              // },
             ),
           ])
         ],
       ),
       GoRoute(
           path: Routes.authScreen,
-          builder: (context, state) => const AuthScreen()
-          // pageBuilder: (context, state) {
-          //   return const NoTransitionPage(child: AuthScreen());
-          // },
-          )
+          builder: (context, state) => const AuthScreen())
     ],
   );
 }

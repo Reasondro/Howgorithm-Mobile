@@ -16,11 +16,23 @@ class _AlgorithmsScreenState extends State<AlgorithmsScreen> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
-      child: ElevatedButton(
-        onPressed: () {
-          context.go(Routes.nestedBubbleSortScreen);
-        },
-        child: const Text("Bubble Sort"),
+      child: Column(
+        children: [
+          ElevatedButton(
+            onPressed: () {
+              GoRouter.of(context).push(Routes.nestedBubbleSortScreen);
+              // context.push(Routes.nestedBubbleSortScreen);
+            },
+            child: const Text("Bubble Sort"),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              GoRouter.of(context).push(Routes.nestedBinarySearchScreen);
+              // context.push(Routes.nestedBinarySearchScreen);
+            },
+            child: const Text("Binary Search"),
+          ),
+        ],
       ),
     );
   }

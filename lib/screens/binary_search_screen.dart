@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'dart:io' show Platform;
 
-class BubbleSortScreen extends StatefulWidget {
-  const BubbleSortScreen({super.key});
+class BinarySearchScreen extends StatefulWidget {
+  const BinarySearchScreen({super.key});
   @override
   State<StatefulWidget> createState() {
-    return _BubbleSortScreenState();
+    return BinarySearchScreenState();
   }
 }
 
-class _BubbleSortScreenState extends State<BubbleSortScreen> {
+class BinarySearchScreenState extends State<BinarySearchScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,7 +32,7 @@ class _BubbleSortScreenState extends State<BubbleSortScreen> {
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       ),
       body: const Center(
-        child: Text("Bubble Sort Screen Placeholder"),
+        child: Text("Binary Search Screen Placeholder"),
       ),
     );
   }
