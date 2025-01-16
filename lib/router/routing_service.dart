@@ -64,7 +64,7 @@ class RoutingService {
           ),
           StatefulShellBranch(routes: [
             GoRoute(
-                name: "Lab",
+                name: "Algorithms",
                 path: Routes.algorithmsScreen,
                 pageBuilder: (context, state) {
                   return const NoTransitionPage(
