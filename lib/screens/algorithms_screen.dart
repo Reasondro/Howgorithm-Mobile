@@ -56,13 +56,16 @@ class AlgorithmsScreen extends StatelessWidget {
               itemCount: algorithms.length,
               itemBuilder: (BuildContext context, int index) {
                 final algorithm = algorithms[index];
-                return AlgorithmCard(
-                  title: algorithm['title'],
-                  description: algorithm['description'],
-                  iconData: algorithm['icon'],
-                  onTap: () {
-                    GoRouter.of(context).push(algorithm['route']);
-                  },
+                return Hero(
+                  tag: "${algorithm['title']}Hero",
+                  child: AlgorithmCard(
+                    title: algorithm['title'],
+                    description: algorithm['description'],
+                    iconData: algorithm['icon'],
+                    onTap: () {
+                      GoRouter.of(context).push(algorithm['route']);
+                    },
+                  ),
                 );
               },
             ),

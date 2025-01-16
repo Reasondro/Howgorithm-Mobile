@@ -30,7 +30,7 @@ final ThemeData howgorithmTheme = ThemeData().copyWith(
         color: howgorithmColorTheme.primary),
   ),
   appBarTheme: AppBarTheme(
-    color: howgorithmColorTheme.surfaceContainer,
+    color: howgorithmColorTheme.surface,
     foregroundColor: howgorithmColorTheme.primary,
   ),
   navigationBarTheme: NavigationBarThemeData(
