@@ -103,21 +103,24 @@ class _BubbleSortScreenState extends State<BubbleSortScreen> {
     return steps;
   }
 
-  //?? [NEW] build  “visualization” with  AnimatedSwitcher and highlighted boxes
   Widget _buildVisualization(_BubbleSortStep step) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        AnimatedSwitcher(
-          duration: const Duration(milliseconds: 300),
-          transitionBuilder: (child, animation) {
-            return FadeTransition(opacity: animation, child: child);
-          },
-          //? unique key so that each step triggers a new animation
-          child: _buildArrayRow(step, key: ValueKey(step)),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              for (int i = 0; i < step.arraySnapshot.length; i++)
+                _buildNumberBox(
+                  value: step.arraySnapshot[i],
+                  isHighlighted: step.highlightIndices.contains(i),
+                ),
+            ],
+          ),
         ),
         const SizedBox(height: 10),
-        //? step description
         Text(
           step.description,
           style: TextStyle(
@@ -126,21 +129,6 @@ class _BubbleSortScreenState extends State<BubbleSortScreen> {
           ),
           textAlign: TextAlign.center,
         ),
-      ],
-    );
-  }
-
-  //? [NEW] display each element in colored container
-  Widget _buildArrayRow(_BubbleSortStep step, {Key? key}) {
-    return Row(
-      key: key,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        for (int i = 0; i < step.arraySnapshot.length; i++)
-          _buildNumberBox(
-            value: step.arraySnapshot[i],
-            isHighlighted: step.highlightIndices.contains(i),
-          ),
       ],
     );
   }

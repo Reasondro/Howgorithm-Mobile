@@ -40,15 +40,18 @@ class BinarySearchScreenState extends State<BinarySearchScreen> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            for (int i = 0; i < step.arraySnapshot.length; i++)
-              _buildNumberBox(
-                value: step.arraySnapshot[i],
-                isHighlighted: step.highlightIndices.contains(i),
-              ),
-          ],
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              for (int i = 0; i < step.arraySnapshot.length; i++)
+                _buildNumberBox(
+                  value: step.arraySnapshot[i],
+                  isHighlighted: step.highlightIndices.contains(i),
+                ),
+            ],
+          ),
         ),
         const SizedBox(height: 12),
         Text(
