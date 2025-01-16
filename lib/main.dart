@@ -23,8 +23,11 @@ final ThemeData howgorithmTheme = ThemeData().copyWith(
     titleSmall: GoogleFonts.dmSans(
         fontWeight: FontWeight.w600,
         fontSize: 20,
+        color: howgorithmColorTheme.secondary),
+    labelSmall: GoogleFonts.dmSans(
+        fontWeight: FontWeight.w400,
+        fontSize: 15,
         color: howgorithmColorTheme.primary),
-    labelSmall: GoogleFonts.dmSans(fontWeight: FontWeight.w400, fontSize: 15),
   ),
   appBarTheme: AppBarTheme(
     color: howgorithmColorTheme.surfaceContainer,

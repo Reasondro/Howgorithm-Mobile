@@ -16,17 +16,17 @@ class LayoutScaffoldWithNav extends StatelessWidget {
     switch (GoRouter.of(context).location) {
       case Routes.homeScreen:
         appBar = AppBar(
-          title: const Text("Home"),
+          title: const Text("HOME"),
         );
         break;
       case Routes.algorithmsScreen:
         appBar = AppBar(
-          title: const Text("Algorithms"),
+          title: const Text("ALGORITHMS"),
         );
         break;
       case Routes.profileScreen:
         appBar = AppBar(
-          title: const Text("Profile"),
+          title: const Text("PROFILE"),
         );
         break;
       default:
