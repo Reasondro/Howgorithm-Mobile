@@ -16,7 +16,7 @@ class _BubbleSortScreenState extends State<BubbleSortScreen> {
     return Scaffold(
       appBar: const AlgorithmAppBar(),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
         child: Center(
           child: Column(
             // mainAxisAlignment: MainAxisAlignment.center,
@@ -26,7 +26,7 @@ class _BubbleSortScreenState extends State<BubbleSortScreen> {
                 child: AlgorithmCard(
                     title: "Bubble Sort",
                     description:
-                        "A simple comparison-based sorting algorithm.\n Bubble Sort repeatedly traverses the list and swaps adjacent elements if they’re out of order. On each pass, the largest element “bubbles up” to the end of the list, and after enough passes, the entire list is sorted. It’s easy to implement but generally has poor performance (O(n²) average time).",
+                        "Bubble Sort repeatedly traverses the list and swaps adjacent elements if they’re out of order.\n On each pass, the largest element “bubbles up” to the end of the list, and after enough passes, the entire list is sorted.\n(O(n²) average time).",
                     iconData: Icons.bubble_chart_outlined,
                     onTap: () {}),
               ),

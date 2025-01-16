@@ -30,6 +30,7 @@ final ThemeData howgorithmTheme = ThemeData().copyWith(
         color: howgorithmColorTheme.primary),
   ),
   appBarTheme: AppBarTheme(
+    scrolledUnderElevation: 0,
     color: howgorithmColorTheme.surface,
     foregroundColor: howgorithmColorTheme.primary,
   ),

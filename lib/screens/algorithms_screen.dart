@@ -35,7 +35,7 @@ class AlgorithmsScreen extends StatelessWidget {
     ];
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0),
+      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -44,7 +44,7 @@ class AlgorithmsScreen extends StatelessWidget {
             style: Theme.of(context).textTheme.titleSmall,
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: 16),
+          // const SizedBox(height: 16),
           Expanded(
             child: GridView.builder(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
