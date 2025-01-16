@@ -48,16 +48,16 @@ class AlgorithmsScreen extends StatelessWidget {
           Expanded(
             child: GridView.builder(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 16.0,
-                mainAxisSpacing: 16.0,
-                childAspectRatio: 0.8,
-              ),
+                  crossAxisCount: 1,
+                  crossAxisSpacing: 16.0,
+                  mainAxisSpacing: 16.0,
+                  childAspectRatio: 0.8,
+                  mainAxisExtent: 150),
               itemCount: algorithms.length,
               itemBuilder: (BuildContext context, int index) {
                 final algorithm = algorithms[index];
                 return Hero(
-                  tag: "${algorithm['title']}Hero",
+                  tag: "${algorithm['title']}",
                   child: AlgorithmCard(
                     title: algorithm['title'],
                     description: algorithm['description'],
