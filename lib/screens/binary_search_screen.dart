@@ -40,7 +40,6 @@ class BinarySearchScreenState extends State<BinarySearchScreen> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        // We can do a Row of boxes for the array, highlighting `step.highlightIndices`
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -52,7 +51,6 @@ class BinarySearchScreenState extends State<BinarySearchScreen> {
           ],
         ),
         const SizedBox(height: 12),
-        // Step description
         Text(
           step.description,
           style: const TextStyle(
@@ -96,9 +94,7 @@ class BinarySearchScreenState extends State<BinarySearchScreen> {
                     });
                   }
                 : null,
-            label: const Icon(Icons.skip_previous_outlined,
-                size: 30) // empty label so the icon is centered
-            ),
+            label: const Icon(Icons.skip_previous_outlined, size: 40)),
         //? step indicator
         if (_hasSteps)
           Text(
@@ -116,7 +112,7 @@ class BinarySearchScreenState extends State<BinarySearchScreen> {
                   });
                 }
               : null,
-          label: const Icon(Icons.skip_next_outlined, size: 30), // empty label
+          label: const Icon(Icons.skip_next_outlined, size: 40), // empty label
         ),
       ],
     );
@@ -176,7 +172,7 @@ class BinarySearchScreenState extends State<BinarySearchScreen> {
     //? initialiation step
     steps.add(_BinarySearchStep(
       List<double>.from(arr),
-      'Initial:\nlow=0, high=${arr.length - 1}',
+      'Initial:\nlow=0, mid=${(0 + (arr.length - 1 - 0) ~/ 2)}, high=${arr.length - 1}',
       highlightIndices: [],
     ));
 
@@ -201,7 +197,7 @@ class BinarySearchScreenState extends State<BinarySearchScreen> {
         // search right half
         steps.add(_BinarySearchStep(
           List<double>.from(arr),
-          '${arr[mid]} < $target, so search right:\nlow=${mid + 1}, high=$high',
+          '${arr[mid]} < $target, so search right:\nlow=${mid + 1}, mid=${mid + 1 + (high - (mid + 1)) ~/ 2}, high=$high',
           highlightIndices: [mid],
         ));
         low = mid + 1;
@@ -209,7 +205,7 @@ class BinarySearchScreenState extends State<BinarySearchScreen> {
         // search left half
         steps.add(_BinarySearchStep(
           List<double>.from(arr),
-          '${arr[mid]} > $target, so search left:\nlow=$low, high=${mid - 1}',
+          '${arr[mid]} > $target, so search left:\nlow=$low, mid=${low + ((mid - 1) - low) ~/ 2} , high=${mid - 1}',
           highlightIndices: [mid],
         ));
         high = mid - 1;

@@ -103,7 +103,7 @@ class _BubbleSortScreenState extends State<BubbleSortScreen> {
     return steps;
   }
 
-  //?? [NEW] Build the “visualization” with an AnimatedSwitcher and highlighted boxes
+  //?? [NEW] build  “visualization” with  AnimatedSwitcher and highlighted boxes
   Widget _buildVisualization(_BubbleSortStep step) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -113,11 +113,11 @@ class _BubbleSortScreenState extends State<BubbleSortScreen> {
           transitionBuilder: (child, animation) {
             return FadeTransition(opacity: animation, child: child);
           },
-          //? A unique key so that each step triggers a new animation
+          //? unique key so that each step triggers a new animation
           child: _buildArrayRow(step, key: ValueKey(step)),
         ),
         const SizedBox(height: 10),
-        //? Step description
+        //? step description
         Text(
           step.description,
           style: TextStyle(
@@ -130,7 +130,7 @@ class _BubbleSortScreenState extends State<BubbleSortScreen> {
     );
   }
 
-  //? [NEW] Display each element in a colored container
+  //? [NEW] display each element in colored container
   Widget _buildArrayRow(_BubbleSortStep step, {Key? key}) {
     return Row(
       key: key,
@@ -145,7 +145,7 @@ class _BubbleSortScreenState extends State<BubbleSortScreen> {
     );
   }
 
-  //? [NEW] A single colored box for one number
+  //? [NEW] single colored box for one number
   Widget _buildNumberBox({required double value, required bool isHighlighted}) {
     final boxColor = isHighlighted
         ? Theme.of(context).colorScheme.tertiary
@@ -169,7 +169,6 @@ class _BubbleSortScreenState extends State<BubbleSortScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        // Previous button
         ElevatedButton.icon(
             onPressed: _hasSteps && _currentStep > 0
                 ? () {
@@ -178,10 +177,7 @@ class _BubbleSortScreenState extends State<BubbleSortScreen> {
                     });
                   }
                 : null,
-            label: const Icon(Icons.skip_previous_outlined,
-                size: 30) // empty label so the icon is centered
-            ),
-        // Step indicator
+            label: const Icon(Icons.skip_previous_outlined, size: 40)),
         if (_hasSteps)
           Text(
             'Step $_currentStep of ${_steps.length - 1}',
@@ -189,7 +185,6 @@ class _BubbleSortScreenState extends State<BubbleSortScreen> {
           )
         else
           const Text('-', style: TextStyle(fontSize: 16, color: Colors.white)),
-        // Next button
         ElevatedButton.icon(
           onPressed: _hasSteps && _currentStep < _steps.length - 1
               ? () {
@@ -198,7 +193,7 @@ class _BubbleSortScreenState extends State<BubbleSortScreen> {
                   });
                 }
               : null,
-          label: const Icon(Icons.skip_next_outlined, size: 30), // empty label
+          label: const Icon(Icons.skip_next_outlined, size: 40),
         ),
       ],
     );
