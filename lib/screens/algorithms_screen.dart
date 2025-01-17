@@ -39,41 +39,61 @@ class AlgorithmsScreen extends StatelessWidget {
     ];
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Explore the fundamentals of each algorithm. Tap on one to learn more.',
-            style: Theme.of(context).textTheme.titleSmall,
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 5),
-          Expanded(
-            child: GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 1,
-                  crossAxisSpacing: 16.0,
-                  mainAxisSpacing: 16.0,
-                  childAspectRatio: 0.8,
-                  mainAxisExtent: 170),
-              itemCount: algorithms.length,
-              itemBuilder: (BuildContext context, int index) {
-                final algorithm = algorithms[index];
-                return AlgorithmCard(
-                  title: algorithm['title'],
-                  description: algorithm['description'],
-                  // iconData: algorithm['icon'],
-                  animation: algorithm['animation'],
-                  onTap: () {
-                    GoRouter.of(context).push(algorithm['route']);
-                  },
-                );
-              },
+        padding: const EdgeInsets.only(top: 5.0),
+        child: ListView(
+          children: [
+            Text(
+              'Explore the fundamentals of each algorithm.\nTap on one to learn more.',
+              style: Theme.of(context).textTheme.titleSmall,
+              textAlign: TextAlign.center,
             ),
-          ),
-        ],
-      ),
-    );
+            const SizedBox(height: 5),
+            for (Map<String, dynamic> algorithm in algorithms)
+              AlgorithmCard(
+                title: algorithm['title'],
+                description: algorithm['description'],
+                // iconData: algorithm['icon'],
+                animation: algorithm['animation'],
+                onTap: () {
+                  GoRouter.of(context).push(algorithm['route']);
+                },
+              )
+          ],
+        )
+        // Column(
+        //   crossAxisAlignment: CrossAxisAlignment.start,
+        //   children: [
+        //     Text(
+        //       'Explore the fundamentals of each algorithm. Tap on one to learn more.',
+        //       style: Theme.of(context).textTheme.titleSmall,
+        //       textAlign: TextAlign.center,
+        //     ),
+        //     const SizedBox(height: 5),
+        //     Expanded(
+        //       child: GridView.builder(
+        //         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        //             crossAxisCount: 1,
+        //             crossAxisSpacing: 16.0,
+        //             mainAxisSpacing: 16.0,
+        //             childAspectRatio: 0.8,
+        //             mainAxisExtent: 170),
+        //         itemCount: algorithms.length,
+        //         itemBuilder: (BuildContext context, int index) {
+        //           final algorithm = algorithms[index];
+        //           return AlgorithmCard(
+        //             title: algorithm['title'],
+        //             description: algorithm['description'],
+        //             // iconData: algorithm['icon'],
+        //             animation: algorithm['animation'],
+        //             onTap: () {
+        //               GoRouter.of(context).push(algorithm['route']);
+        //             },
+        //           );
+        //         },
+        //       ),
+        //     ),
+        //   ],
+        // ),
+        );
   }
 }
