@@ -15,7 +15,10 @@ class ClassicalSearchQuizScreenState extends State<ClassicalSearchQuizScreen> {
     return Scaffold(
       appBar: const AlgorithmAppBar(),
       body: Center(
-        child: Text("Classical Search Screen Placeholder"),
+        child: Text(
+          "Classical Search\nCOMING IN SUMMER 2025 ",
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
       ),
     );
   }

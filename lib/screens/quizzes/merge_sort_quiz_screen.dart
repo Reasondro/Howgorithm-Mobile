@@ -16,7 +16,10 @@ class _MergeSortQuizScreenState extends State<MergeSortQuizScreen> {
     return Scaffold(
       appBar: const AlgorithmAppBar(),
       body: Center(
-        child: Text("Merge Sort Screen Placeholder"),
+        child: Text(
+          "Merge Sort\nCOMING IN SUMMER 2025 ",
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
       ),
     );
   }
