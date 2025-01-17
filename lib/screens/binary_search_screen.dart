@@ -68,8 +68,8 @@ class BinarySearchScreenState extends State<BinarySearchScreen> {
 
   Widget _buildNumberBox({required double value, required bool isHighlighted}) {
     final boxColor = isHighlighted
-        ? Theme.of(context).colorScheme.tertiary
-        : Colors.grey[800];
+        ? Theme.of(context).colorScheme.inversePrimary
+        : Theme.of(context).colorScheme.inverseSurface;
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 4),
       padding: const EdgeInsets.all(8),
@@ -79,7 +79,12 @@ class BinarySearchScreenState extends State<BinarySearchScreen> {
       ),
       child: Text(
         value.toString(),
-        style: const TextStyle(color: Colors.white, fontSize: 16),
+        style: TextStyle(
+            color: isHighlighted
+                ? Theme.of(context).colorScheme.onSurface
+                : Theme.of(context).colorScheme.onInverseSurface,
+            fontSize: 16,
+            fontWeight: FontWeight.w600),
       ),
     );
   }
@@ -185,14 +190,14 @@ class BinarySearchScreenState extends State<BinarySearchScreen> {
       //? step => highlighting mid
       steps.add(_BinarySearchStep(
         List<double>.from(arr),
-        'Checking mid index [$mid]: ${arr[mid]}',
+        'Checking mid index [$mid]:\n${arr[mid]}',
         highlightIndices: [mid],
       ));
 
       if (arr[mid] == target) {
         steps.add(_BinarySearchStep(
           List<double>.from(arr),
-          'Found $target at index [$mid]!',
+          'Found $target at index [$mid]',
           highlightIndices: [mid],
         ));
         return steps; //? bisa stop here
@@ -243,7 +248,7 @@ class BinarySearchScreenState extends State<BinarySearchScreen> {
                       "Binary Search halves the search space each time.\n"
                       "It requires a sorted array and compares the target with the middle element.\n"
                       "(O(log n) average time).",
-                  iconData: Icons.switch_left_outlined,
+                  // iconData: Icons.switch_left_outlined,
                   animation: "assets/animations/binary1.json",
                   onTap: () {},
                 ),

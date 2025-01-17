@@ -65,7 +65,7 @@ class _BubbleSortScreenState extends State<BubbleSortScreen> {
 
     steps.add(_BubbleSortStep(
       List<double>.from(arr),
-      'Initial array: ${arr.join(", ")}',
+      'Initial array:\n${arr.join(", ")}',
     ));
 
     for (int i = 0; i < arr.length - 1; i++) {
@@ -136,8 +136,8 @@ class _BubbleSortScreenState extends State<BubbleSortScreen> {
   //? [NEW] single colored box for one number
   Widget _buildNumberBox({required double value, required bool isHighlighted}) {
     final boxColor = isHighlighted
-        ? Theme.of(context).colorScheme.tertiary
-        : Colors.grey[800];
+        ? Theme.of(context).colorScheme.inversePrimary
+        : Theme.of(context).colorScheme.inverseSurface;
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 4),
       padding: const EdgeInsets.all(8),
@@ -147,7 +147,12 @@ class _BubbleSortScreenState extends State<BubbleSortScreen> {
       ),
       child: Text(
         value.toString(),
-        style: const TextStyle(color: Colors.white, fontSize: 16),
+        style: TextStyle(
+            color: isHighlighted
+                ? Theme.of(context).colorScheme.onSurface
+                : Theme.of(context).colorScheme.onInverseSurface,
+            fontSize: 16,
+            fontWeight: FontWeight.w600),
       ),
     );
   }
@@ -203,7 +208,7 @@ class _BubbleSortScreenState extends State<BubbleSortScreen> {
                   title: "Bubble Sort",
                   description:
                       "Bubble Sort repeatedly traverses the list and swaps adjacent elements if they’re out of order.\n On each pass, the largest element “bubbles up” to the end of the list, and after enough passes, the entire list is sorted.\n(O(n²) average time).",
-                  iconData: Icons.bubble_chart_outlined,
+                  // iconData: Icons.bubble_chart_outlined,
                   animation: "assets/animations/bubble3.json",
                   onTap: () {},
                 ),

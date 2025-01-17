@@ -6,14 +6,14 @@ class AlgorithmCard extends StatelessWidget {
     super.key,
     required this.title,
     required this.description,
-    required this.iconData,
+    // required this.iconData,
     required this.animation,
     required this.onTap,
   });
 
   final String title;
   final String description;
-  final IconData iconData;
+  // final IconData iconData;
   final String animation;
   final VoidCallback onTap;
 

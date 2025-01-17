@@ -63,7 +63,7 @@ class AlgorithmsScreen extends StatelessWidget {
                 return AlgorithmCard(
                   title: algorithm['title'],
                   description: algorithm['description'],
-                  iconData: algorithm['icon'],
+                  // iconData: algorithm['icon'],
                   animation: algorithm['animation'],
                   onTap: () {
                     GoRouter.of(context).push(algorithm['route']);
