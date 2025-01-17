@@ -117,7 +117,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           leading: const Icon(Icons.leaderboard_outlined),
                           title: const Text('Ranked'),
                           trailing: Text(
-                            '${listProgress.first.ranked}',
+                            listProgress.first.ranked,
                             style: const TextStyle(fontWeight: FontWeight.w600),
                           ),
                         ),
