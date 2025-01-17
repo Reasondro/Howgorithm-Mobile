@@ -146,7 +146,8 @@ class _BubbleSortScreenState extends State<BubbleSortScreen> {
       resizeToAvoidBottomInset: false,
       appBar: const AlgorithmAppBar(),
       body: Padding(
-        padding: const EdgeInsets.only(left: 8, right: 8, top: 10, bottom: 20),
+        padding:
+            const EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 20),
         child: Center(
           child: Column(
             children: [

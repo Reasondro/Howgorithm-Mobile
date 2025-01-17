@@ -49,14 +49,17 @@ class AlgorithmsScreen extends StatelessWidget {
             ),
             const SizedBox(height: 5),
             for (Map<String, dynamic> algorithm in algorithms)
-              AlgorithmCard(
-                title: algorithm['title'],
-                description: algorithm['description'],
-                // iconData: algorithm['icon'],
-                animation: algorithm['animation'],
-                onTap: () {
-                  GoRouter.of(context).push(algorithm['route']);
-                },
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: AlgorithmCard(
+                  title: algorithm['title'],
+                  description: algorithm['description'],
+                  // iconData: algorithm['icon'],
+                  animation: algorithm['animation'],
+                  onTap: () {
+                    GoRouter.of(context).push(algorithm['route']);
+                  },
+                ),
               )
           ],
         )
