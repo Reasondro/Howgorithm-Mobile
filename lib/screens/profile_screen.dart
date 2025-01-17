@@ -42,7 +42,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               stream: _progressDatabase.stream,
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {
-                  return const CircularProgressIndicator();
+                  return const Center(child: CircularProgressIndicator());
                 }
                 final List<Progress> listProgress = snapshot.data!;
                 return Column(
