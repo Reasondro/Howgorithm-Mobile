@@ -9,7 +9,6 @@ class _BinarySearchStep {
   final List<double> arraySnapshot;
   final String description;
 
-  // Indices to highlight (usually we’ll highlight just `mid`, but we could highlight [low, mid, high] too)
   final List<int> highlightIndices;
 
   _BinarySearchStep(
@@ -203,7 +202,7 @@ class BinarySearchScreenState extends State<BinarySearchScreen> {
               TextField(
                 controller: _arrayController,
                 decoration: const InputDecoration(
-                  labelText: 'Enter a sorted array (comma-separated)',
+                  labelText: 'Enter an arry (comma-separated)',
                   border: OutlineInputBorder(),
                   hintText: 'e.g. 1,3,4,7,11,12',
                 ),
