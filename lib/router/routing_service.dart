@@ -143,7 +143,7 @@ class RoutingService {
                     parentNavigatorKey: _rootNavigatorKey,
                     path: Routes.binarySearchQuizScreen,
                     builder: (context, state) {
-                      return const BinarySearchScreenQuiz();
+                      return const BinarySearchQuizScreen();
                     },
                   )
                 ]),

@@ -195,7 +195,7 @@ class BinarySearchScreenState extends State<BinarySearchScreen> {
                       "It requires a sorted array and compares the target with the middle element.\n"
                       "(O(log n) average time).",
                   // iconData: Icons.switch_left_outlined,
-                  animation: "assets/animations/binary1.json",
+                  animation: "assets/animations/binary8.json",
                   onTap: () {},
                 ),
               ),

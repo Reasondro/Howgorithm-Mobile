@@ -1,95 +1,66 @@
 import 'package:flutter/material.dart';
 import 'package:howgorithm/auth/auth_service.dart';
+import 'package:howgorithm/database/progress_database.dart';
+import 'package:howgorithm/models/progress.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
+
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  final ProgressDatabase _progressDatabase = ProgressDatabase();
 
   @override
   Widget build(BuildContext context) {
     final String userEmail =
         AuthService.supabase.auth.currentUser!.email ?? "User Email";
     return Padding(
-      padding: const EdgeInsets.only(top: 5, right: 16.0, left: 16.0),
+      padding: const EdgeInsets.only(top: 16, right: 16.0, left: 16.0),
       child: ListView(
         children: [
-          const SizedBox(height: 8),
           const Center(
             child: CircleAvatar(
               radius: 50,
               backgroundImage: AssetImage('assets/images/default-profile.png'),
             ),
           ),
-          const SizedBox(height: 8),
-          // Center(
-          //   child: Text(
-          //     'Alessandro Jusack H.',
-          //     style: Theme.of(context).textTheme.titleMedium,
-          //     textAlign: TextAlign.center,
-          //   ),
-          // ),
           const SizedBox(height: 4),
           Center(
             child: Text(
               userEmail,
-              // style: Theme.of(context).textTheme.bodyMedium,
               style: Theme.of(context).textTheme.titleSmall,
               textAlign: TextAlign.center,
             ),
           ),
           const SizedBox(height: 16),
-          Center(
-            child: ElevatedButton(
-              onPressed: () {},
-              child: const Text('Edit Profile'),
-            ),
-          ),
-          const SizedBox(height: 16),
           const Divider(),
           const SizedBox(height: 8),
-          Text(
-            "Pengaturan & Informasi",
-            style: Theme.of(context).textTheme.titleMedium,
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 16),
-          Card(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: ListTile(
-              leading: const Icon(Icons.notifications),
-              title: const Text('Pengaturan Notifikasi'),
-              subtitle: const Text('Atur preferensi notifikasi Anda'),
-              trailing: const Icon(Icons.arrow_forward_ios),
-              onTap: () {},
-            ),
-          ),
-          const SizedBox(height: 8),
-          Card(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: ListTile(
-              leading: const Icon(Icons.help),
-              title: const Text('Bantuan'),
-              subtitle: const Text('FAQ, kontak layanan pelanggan'),
-              trailing: const Icon(Icons.arrow_forward_ios),
-              onTap: () {},
-            ),
-          ),
-          const SizedBox(height: 8),
-          Card(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: ListTile(
-              leading: const Icon(Icons.info),
-              title: const Text('Tentang Aplikasi'),
-              subtitle: const Text('Informasi versi & developer'),
-              trailing: const Icon(Icons.arrow_forward_ios),
-              onTap: () {},
-            ),
-          ),
+          StreamBuilder(
+              stream: _progressDatabase.stream,
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return const CircularProgressIndicator();
+                }
+                final List<Progress> listProgress = snapshot.data!;
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                        "Bubble Sort Score     : ${listProgress.first.bubbleScore}"),
+                    Text(
+                        "Merge Sort Score      : ${listProgress.first.mergeScore}"),
+                    Text(
+                        "Classical Search Score: ${listProgress.first.classicalScore}"),
+                    Text(
+                        "Binary Search Score   : ${listProgress.first.binaryScore}"),
+                    Text("Total Score: ${listProgress.first.totalScore}"),
+                    Text("Ranked: ${listProgress.first.ranked}"),
+                  ],
+                );
+              }),
           const SizedBox(height: 16),
           Center(
             child: ElevatedButton(

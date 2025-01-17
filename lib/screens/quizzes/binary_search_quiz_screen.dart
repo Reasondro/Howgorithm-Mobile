@@ -1,263 +1,348 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:howgorithm/widgets/algorithm_app_bar.dart';
-import 'package:howgorithm/widgets/algorithm_card.dart';
-import 'package:howgorithm/extensions/snackbar_extension.dart';
-import 'package:howgorithm/widgets/algorithm_visualization.dart';
+// import 'package:supabase_flutter/supabase_flutter.dart'; // Pseudocode for database
 
-// ?? model buat nge store tiap snapshot binary search step nya + description
-class _BinarySearchStep {
-  final List<double> arraySnapshot;
-  final String description;
-
-  // Indices to highlight (usually we’ll highlight just `mid`, but we could highlight [low, mid, high] too)
-  final List<int> highlightIndices;
-
-  _BinarySearchStep(
-    this.arraySnapshot,
-    this.description, {
-    this.highlightIndices = const [],
-  });
-}
-
-class BinarySearchScreenQuiz extends StatefulWidget {
-  const BinarySearchScreenQuiz({super.key});
+class BinarySearchQuizScreen extends StatefulWidget {
+  const BinarySearchQuizScreen({Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() {
-    return BinarySearchScreenQuizState();
-  }
+  State<BinarySearchQuizScreen> createState() => _BinarySearchQuizScreenState();
 }
 
-class BinarySearchScreenQuizState extends State<BinarySearchScreenQuiz> {
-  final TextEditingController _arrayController = TextEditingController();
-  final TextEditingController _targetController = TextEditingController();
+class _BinarySearchQuizScreenState extends State<BinarySearchQuizScreen> {
+  // Example array (sorted); in a real quiz, might come from user input or be randomized
+  final List<double> _arr = [1, 3, 5, 9, 12, 18, 21, 25];
+  final double _target = 12; // The user is trying to find this number
 
-  List<_BinarySearchStep> _steps = [];
-  int _currentStep = 0;
+  int _low = 0;
+  int _high = 0;
+  int _mid = 0;
 
-  bool get _hasSteps => _steps.isNotEmpty;
+  int _score = 0;
+  bool _quizFinished = false;
 
-  // TODO modularize this
-  Widget _buildControls() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        // Previous button
-        ElevatedButton.icon(
-            onPressed: _hasSteps && _currentStep > 0
-                ? () {
-                    setState(() {
-                      _currentStep--;
-                    });
-                  }
-                : null,
-            label: const Icon(Icons.skip_previous_outlined, size: 40)),
-        //? step indicator
-        if (_hasSteps)
-          Text(
-            'Step $_currentStep of ${_steps.length - 1}',
-            style: const TextStyle(fontSize: 16),
-          )
-        else
-          const Text('-', style: TextStyle(fontSize: 16, color: Colors.white)),
-        // Next button
-        ElevatedButton.icon(
-          onPressed: _hasSteps && _currentStep < _steps.length - 1
-              ? () {
-                  setState(() {
-                    _currentStep++;
-                  });
-                }
-              : null,
-          label: const Icon(Icons.skip_next_outlined, size: 40), // empty label
-        ),
-      ],
-    );
+  // We’ll store the steps so that we can show them or quickly debug if needed
+  final List<_BinarySearchStep> _steps = [];
+  int _currentStepIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _high = _arr.length - 1;
+    _generateSteps();
+    // For demonstration, let's also show how you'd fetch the user's current score from Supabase.
+    _fetchUserScore();
   }
 
-  //? parse inputs, then run step-by-step binary  search nya
-  void _computeSteps() {
-    final rawArray = _arrayController.text.trim();
-    final rawTarget = _targetController.text.trim();
+  /// Pseudo-function to demonstrate how you’d fetch the user’s current score from Supabase
+  Future<void> _fetchUserScore() async {
+    // final user = Supabase.instance.client.auth.currentUser;
+    // if (user == null) return;
 
-    if (rawArray.isEmpty || rawTarget.isEmpty) {
-      context.customShowErrorSnackBar('Please enter both array and target!');
-      return;
-    }
-
-    //? parse arr
-    final parts = rawArray.split(',');
-    final doubleList = <double>[];
-    for (var p in parts) {
-      final val = double.tryParse(p.trim());
-      if (val != null) {
-        doubleList.add(val);
-      } else {
-        context.customShowErrorSnackBar('Please enter a valid array!');
-        return;
-      }
-    }
-    // ? sort for dumb users
-    doubleList.sort();
-
-    //? parase target
-    final targetVal = double.tryParse(rawTarget);
-    if (targetVal == null) {
-      context.customShowErrorSnackBar('Please enter a valid target!');
-      return;
-    }
-
-    _steps = _binarySearchWithSnapshots(doubleList, targetVal);
-    _currentStep = 0;
-    setState(() {});
+    // final response = await Supabase.instance.client
+    //     .from("progress")
+    //     .select("binary_score, total_score")
+    //     .eq("id", user.id)
+    //     .single();
+    // if (response.error == null && response.data != null) {
+    //   // For example:
+    //   final data = response.data;
+    //   final currentBinaryScore = data['binary_score'] as int;
+    //   final currentTotalScore = data['total_score'] as int;
+    //   // Use these as needed
+    // }
   }
 
-  //? return list of steps buat si binary search
-  List<_BinarySearchStep> _binarySearchWithSnapshots(
-      List<double> inputArray, double target) {
-    final steps = <_BinarySearchStep>[];
+  /// Pseudo-function to demonstrate how you'd update the user’s new score in Supabase
+  Future<void> _updateUserScoreInDB(int newBinaryScore) async {
+    // final user = Supabase.instance.client.auth.currentUser;
+    // if (user == null) return;
 
-    //? again buat copy
-    final arr = List<double>.from(inputArray);
+    // final response = await Supabase.instance.client
+    //     .from("progress")
+    //     .update({
+    //       'binary_score': newBinaryScore,
+    //       'total_score': ... // current total + or - ...
+    //     })
+    //     .eq("id", user.id);
+    // if (response.error != null) {
+    //   // handle error
+    // }
+  }
 
-    int low = 0;
-    int high = arr.length - 1;
+  /// Generate the step-by-step flow of the binary search
+  void _generateSteps() {
+    // We won't simulate the entire search at once; let's store each step:
+    int low = _low;
+    int high = _high;
 
-    //? initialiation step
-    steps.add(_BinarySearchStep(
-      List<double>.from(arr),
-      'Initial:\nlow=0, mid=${(0 + (arr.length - 1 - 0) ~/ 2)}, high=${arr.length - 1}',
-      highlightIndices: [],
-    ));
+    _steps.clear();
 
+    // We'll keep stepping until we find the target or exhaust the search
     while (low <= high) {
       final mid = (low + high) ~/ 2;
-
-      //? step => highlighting mid
-      steps.add(_BinarySearchStep(
-        List<double>.from(arr),
-        'Checking mid index [$mid]:\n${arr[mid]}',
-        highlightIndices: [mid],
+      _steps.add(_BinarySearchStep(
+        low: low,
+        high: high,
+        mid: mid,
+        arrSnapshot: List<double>.from(_arr),
       ));
 
-      if (arr[mid] == target) {
-        steps.add(_BinarySearchStep(
-          List<double>.from(arr),
-          'Found $target at index [$mid]',
-          highlightIndices: [mid],
-        ));
-        return steps; //? bisa stop here
-      } else if (arr[mid] < target) {
-        // search right half
-        steps.add(_BinarySearchStep(
-          List<double>.from(arr),
-          '${arr[mid]} < $target, so search right:\nlow=${mid + 1}, mid=${mid + 1 + (high - (mid + 1)) ~/ 2}, high=$high',
-          highlightIndices: [mid],
-        ));
+      if (_arr[mid] == _target) {
+        // Found
+        break;
+      } else if (_arr[mid] < _target) {
         low = mid + 1;
       } else {
-        // search left half
-        steps.add(_BinarySearchStep(
-          List<double>.from(arr),
-          '${arr[mid]} > $target, so search left:\nlow=$low, mid=${low + ((mid - 1) - low) ~/ 2} , high=${mid - 1}',
-          highlightIndices: [mid],
-        ));
         high = mid - 1;
       }
     }
+    // If we never found the target in this example, so be it (quiz ends anyway)
+  }
 
-    //? if  exit  while loop, targetnot found
-    steps.add(_BinarySearchStep(
-      List<double>.from(arr),
-      '$target not found in the array!',
-      highlightIndices: [],
-    ));
+  /// Called when the user picks "Left" or "Right"
+  void _onAnswer(String direction) {
+    if (_quizFinished) return;
 
-    return steps;
+    final step = _steps[_currentStepIndex];
+    final midValue = step.arrSnapshot[step.mid];
+
+    // Determine the CORRECT direction
+    // If arr[mid] < target => correct direction is "Right"
+    // If arr[mid] > target => correct direction is "Left"
+    // If arr[mid] == target => quiz ends
+    String correct;
+    if (midValue == _target) {
+      correct = "Found";
+    } else if (midValue < _target) {
+      correct = "Right";
+    } else {
+      correct = "Left";
+    }
+
+    if (correct == "Found") {
+      // The user actually can't pick left/right here,
+      // but let's handle just in case
+      setState(() {
+        _quizFinished = true;
+      });
+      return;
+    }
+
+    if (direction == correct) {
+      _score++;
+    } else {
+      _score--;
+    }
+
+    // Move to next step
+    _currentStepIndex++;
+    if (_currentStepIndex >= _steps.length) {
+      // Means we've reached the end (found target or exhausted search)
+      setState(() {
+        _quizFinished = true;
+      });
+    } else {
+      // We continue
+      setState(() {});
+    }
+  }
+
+  /// If the quiz is done, we may update the DB, show a summary, etc.
+  void _endQuizAndUpdateDB() {
+    // For example, update supabase
+    _updateUserScoreInDB(_score);
+
+    // Then go back or show a 'results' screen
+    GoRouter.of(context).pop();
   }
 
   @override
   Widget build(BuildContext context) {
+    // If the quiz is finished or we have no steps, show results
+    if (_quizFinished || _steps.isEmpty) {
+      return _buildQuizFinished();
+    }
+
+    final step = _steps[_currentStepIndex];
+    final midIndex = step.mid;
+    final midValue = step.arrSnapshot[midIndex];
+
+    return _buildQuizStep(step, midValue);
+  }
+
+  /// Screen to show a single step (low, mid, high) and let user choose "Left" or "Right"
+  Widget _buildQuizStep(_BinarySearchStep step, double midValue) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       appBar: const AlgorithmAppBar(),
       body: Padding(
-        padding: const EdgeInsets.only(left: 8, right: 8, top: 10, bottom: 20),
-        child: Center(
-          child: Column(
-            children: [
-              SizedBox(
-                width: double.infinity,
-                child: AlgorithmCard(
-                  title: "Binary Search",
-                  description:
-                      "Binary Search halves the search space each time.\n"
-                      "It requires a sorted array and compares the target with the middle element.\n"
-                      "(O(log n) average time).",
-                  // iconData: Icons.switch_left_outlined,
-                  animation: "assets/animations/binary1.json",
-                  onTap: () {},
-                ),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Binary Search Quiz',
+              style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+            ),
+            const SizedBox(height: 8),
+
+            // Score display
+            Text(
+              'Score: $_score',
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.primary,
+                fontSize: 16,
               ),
-              const SizedBox(height: 20),
-              TextField(
-                controller: _arrayController,
-                decoration: const InputDecoration(
-                  labelText: 'Enter a sorted array (comma-separated)',
-                  border: OutlineInputBorder(),
-                  hintText: 'e.g. 1,3,4,7,11,12',
+            ),
+            const SizedBox(height: 16),
+
+            // Show the array with highlights for [low, mid, high]
+            AnimatedSwitcher(
+              duration: const Duration(milliseconds: 400),
+              transitionBuilder: (child, animation) {
+                return FadeTransition(opacity: animation, child: child);
+              },
+              child: _buildArrayVisualization(step, key: ValueKey(step)),
+            ),
+            const SizedBox(height: 24),
+
+            // Current question
+            Text(
+              "At index [${step.mid}], we have ${midValue.toStringAsFixed(2)}.\n"
+              "Should we go LEFT or RIGHT?",
+              style: const TextStyle(fontSize: 18),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 24),
+
+            // Buttons for "Left" or "Right"
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton.icon(
+                  onPressed: () => _onAnswer("Left"),
+                  icon: const Icon(Icons.arrow_left),
+                  label: const Text('Left'),
                 ),
-              ),
-              const SizedBox(height: 12),
-              TextField(
-                controller: _targetController,
-                decoration: const InputDecoration(
-                  labelText: 'Enter the target number to find',
-                  border: OutlineInputBorder(),
-                  hintText: 'e.g. 7',
+                ElevatedButton.icon(
+                  onPressed: () => _onAnswer("Right"),
+                  icon: const Icon(Icons.arrow_right),
+                  label: const Text('Right'),
                 ),
-              ),
-              const SizedBox(height: 16),
-              ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: WidgetStatePropertyAll(
-                      Theme.of(context).colorScheme.inverseSurface),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  /// When quiz is finished or we have no steps
+  Widget _buildQuizFinished() {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(24.0),
+        child: Card(
+          color: Theme.of(context).colorScheme.surfaceContainer,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          child: Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'Quiz Finished!',
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
                 ),
-                onPressed: _computeSteps,
-                child: Text(
-                  'Compute Binary Search Steps',
+                const SizedBox(height: 8),
+                Text(
+                  'Your Final Score: $_score',
                   style: TextStyle(
-                    fontSize: 14,
-                    color: Theme.of(context).colorScheme.inversePrimary,
+                    color: Theme.of(context).colorScheme.primary,
+                    fontSize: 20,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-              ),
-              const SizedBox(height: 16),
-              Expanded(
-                child: Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: Colors.black,
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  child: _hasSteps
-                      ? AlgorithmVisualization(step: _steps[_currentStep])
-                      : const Center(
-                          child: Text(
-                            'No steps yet.\nEnter the array & target, then tap the button!',
-                            style: TextStyle(color: Colors.white, fontSize: 16),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
+                const SizedBox(height: 16),
+                ElevatedButton(
+                  onPressed: _endQuizAndUpdateDB,
+                  child: const Text('Close Quiz'),
                 ),
-              ),
-              const SizedBox(height: 16),
-              _buildControls(),
-            ],
+              ],
+            ),
           ),
         ),
       ),
     );
   }
+
+  /// Visually display the array, with [low, mid, high] highlighted
+  Widget _buildArrayVisualization(_BinarySearchStep step, {Key? key}) {
+    return Container(
+      key: key,
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.black87,
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: List.generate(step.arrSnapshot.length, (i) {
+            bool isLow = (i == step.low);
+            bool isHigh = (i == step.high);
+            bool isMid = (i == step.mid);
+
+            // We highlight mid with orange, low with green, high with blue (example)
+            Color boxColor;
+            if (isMid) {
+              boxColor = Colors.orange;
+            } else if (isLow) {
+              boxColor = Colors.green;
+            } else if (isHigh) {
+              boxColor = Colors.blue;
+            } else {
+              boxColor = Colors.grey[700]!;
+            }
+
+            return Container(
+              margin: const EdgeInsets.symmetric(horizontal: 6),
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: boxColor,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Text(
+                step.arrSnapshot[i].toStringAsFixed(2),
+                style: const TextStyle(color: Colors.white),
+              ),
+            );
+          }),
+        ),
+      ),
+    );
+  }
+}
+
+// A simple model to store a step in the binary search
+class _BinarySearchStep {
+  final int low;
+  final int high;
+  final int mid;
+
+  // In case the array changes or you want to highlight certain elements
+  final List<double> arrSnapshot;
+
+  _BinarySearchStep({
+    required this.low,
+    required this.high,
+    required this.mid,
+    required this.arrSnapshot,
+  });
 }
