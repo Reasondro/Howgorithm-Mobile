@@ -4,6 +4,7 @@ class Routes {
 
   static const String homeScreen = "/home";
   static const String algorithmsScreen = "/algorithms";
+  static const String quizzesScreen = "/quizzes";
   static const String profileScreen = "/profile";
 
   static const String bubbleSortScreen = "bubble-sort";
@@ -19,18 +20,16 @@ class Routes {
       "/algorithms/classical-search";
   static const String nestedBinarySearchScreen = "/algorithms/binary-search";
 
-  static const String bubbleSortQuizScreen = "bubble-sort-quiz";
-  static const String mergeSortSQuizcreen = "merge-sort-quiz";
+  static const String bubbleSortQuizScreen = "bubble-sort";
+  static const String mergeSortQuizcreen = "merge-sort";
 
-  static const String classicalSearchQuizScreen = "classical-search-quiz";
-  static const String binarySearchQuizScreen = "binary-search-quiz";
+  static const String classicalSearchQuizScreen = "classical-search";
+  static const String binarySearchQuizScreen = "binary-search";
 
-  static const String nestedBubbleSortQuizScreen =
-      "/algorithms/bubble-sort-quiz";
-  static const String nestedMergeSortQuizScreen = "/algorithms/merge-sort-quiz";
+  static const String nestedBubbleSortQuizScreen = "/quizzes/bubble-sort";
+  static const String nestedMergeSortQuizScreen = "/quizzes/merge-sort";
 
   static const String nestedClassicalSearchQuizScreen =
-      "/algorithms/classical-search-quiz";
-  static const String nestedBinarySearchQuizScreen =
-      "/algorithms/binary-search-quiz";
+      "/quizzes/classical-search";
+  static const String nestedBinarySearchQuizScreen = "/quizzes/binary-search";
 }

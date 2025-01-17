@@ -2,15 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:howgorithm/screens/algorithms_screen.dart';
 import 'package:howgorithm/screens/auth_screen.dart';
-import 'package:howgorithm/screens/binary_search_screen.dart';
-import 'package:howgorithm/screens/bubble_sort_screen.dart';
-import 'package:howgorithm/screens/classical_search_screen.dart';
+import 'package:howgorithm/screens/algorithms/binary_search_screen.dart';
+import 'package:howgorithm/screens/algorithms/bubble_sort_screen.dart';
+import 'package:howgorithm/screens/algorithms/classical_search_screen.dart';
 
 import 'package:howgorithm/screens/home_screen.dart';
-import 'package:howgorithm/screens/merge_sort_screen.dart';
+import 'package:howgorithm/screens/algorithms/merge_sort_screen.dart';
 import 'package:howgorithm/screens/profile_screen.dart';
 import 'package:howgorithm/layouts/layout_scaffold_with_nav.dart';
 import 'package:howgorithm/router/routes.dart';
+import 'package:howgorithm/screens/quizzes_screen.dart';
+import 'package:howgorithm/screens/quizzes/binary_search_quiz_screen.dart';
+import 'package:howgorithm/screens/quizzes/bubble_sort_quiz_screen.dart';
+import 'package:howgorithm/screens/quizzes/classical_search_quiz_screen.dart';
+import 'package:howgorithm/screens/quizzes/merge_sort_quiz_screen.dart';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -102,6 +107,46 @@ class RoutingService {
                 )
               ],
             ),
+          ]),
+          StatefulShellBranch(routes: [
+            GoRoute(
+                name: "Quizzes",
+                path: Routes.quizzesScreen,
+                builder: (context, state) => const QuizzesScreen(),
+                routes: [
+                  GoRoute(
+                    name: "Bubble Sort Quiz",
+                    parentNavigatorKey: _rootNavigatorKey,
+                    path: Routes.bubbleSortQuizScreen,
+                    builder: (context, state) {
+                      return const BubbleSortQuizScreen();
+                    },
+                  ),
+                  GoRoute(
+                    name: "Merge Sort Quiz",
+                    parentNavigatorKey: _rootNavigatorKey,
+                    path: Routes.mergeSortQuizcreen,
+                    builder: (context, state) {
+                      return const MergeSortQuizScreen();
+                    },
+                  ),
+                  GoRoute(
+                    name: "Classical Search Quiz",
+                    parentNavigatorKey: _rootNavigatorKey,
+                    path: Routes.classicalSearchQuizScreen,
+                    builder: (context, state) {
+                      return const ClassicalSearchQuizScreen();
+                    },
+                  ),
+                  GoRoute(
+                    name: "Binary Search Quiz",
+                    parentNavigatorKey: _rootNavigatorKey,
+                    path: Routes.binarySearchQuizScreen,
+                    builder: (context, state) {
+                      return const BinarySearchScreenQuiz();
+                    },
+                  )
+                ]),
           ]),
           StatefulShellBranch(routes: [
             GoRoute(

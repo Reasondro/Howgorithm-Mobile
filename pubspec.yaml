@@ -77,7 +77,18 @@ flutter:
     - assets/animations/bubble3.json
     - assets/animations/merge1.json
     - assets/animations/classical1.json
+    - assets/animations/classical2.json
+    - assets/animations/classical3.json
+    - assets/animations/classical4.json
+    - assets/animations/classical5.json
     - assets/animations/binary1.json
+    - assets/animations/binary2.json
+    - assets/animations/binary3.json
+    - assets/animations/binary4.json
+    - assets/animations/binary5.json
+    - assets/animations/binary6.json
+    - assets/animations/binary7.json
+    - assets/animations/binary8.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

@@ -3,7 +3,6 @@ import 'package:howgorithm/widgets/algorithm_app_bar.dart';
 import 'package:howgorithm/widgets/algorithm_card.dart';
 import 'package:howgorithm/extensions/snackbar_extension.dart';
 import 'package:howgorithm/widgets/algorithm_visualization.dart';
-import 'package:howgorithm/widgets/number_box.dart';
 
 // ?? model buat nge store tiap snapshot binary search step nya + description
 class _BinarySearchStep {
@@ -20,16 +19,16 @@ class _BinarySearchStep {
   });
 }
 
-class BinarySearchScreen extends StatefulWidget {
-  const BinarySearchScreen({super.key});
+class BinarySearchScreenQuiz extends StatefulWidget {
+  const BinarySearchScreenQuiz({super.key});
 
   @override
   State<StatefulWidget> createState() {
-    return BinarySearchScreenState();
+    return BinarySearchScreenQuizState();
   }
 }
 
-class BinarySearchScreenState extends State<BinarySearchScreen> {
+class BinarySearchScreenQuizState extends State<BinarySearchScreenQuiz> {
   final TextEditingController _arrayController = TextEditingController();
   final TextEditingController _targetController = TextEditingController();
 

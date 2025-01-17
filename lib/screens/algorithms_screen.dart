@@ -26,14 +26,14 @@ class AlgorithmsScreen extends StatelessWidget {
         'title': 'Classical Search',
         'description': 'EMPTY',
         'icon': Icons.search_outlined,
-        'animation': "assets/animations/classical1.json",
+        'animation': "assets/animations/classical5.json",
         'route': Routes.nestedClassicalSearchScreen,
       },
       {
         'title': 'Binary Search',
         'description': 'Quickly search for an element in a sorted array.',
         'icon': Icons.switch_left_outlined,
-        'animation': "assets/animations/binary1.json",
+        'animation': "assets/animations/binary8.json",
         'route': Routes.nestedBinarySearchScreen,
       },
     ];

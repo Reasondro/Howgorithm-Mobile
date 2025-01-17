@@ -10,5 +10,6 @@ class Destination {
 const destinations = [
   Destination(label: "Home", icon: Icons.home),
   Destination(label: "Algorithms", icon: Icons.device_hub),
+  Destination(label: "Quizzes", icon: Icons.quiz),
   Destination(label: "Profile", icon: Icons.person),
 ];
