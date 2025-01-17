@@ -196,7 +196,7 @@ class _BubbleSortScreenState extends State<BubbleSortScreen> {
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: _hasSteps
-                      ? algorithmVisualization(_steps[_currentStep])
+                      ? AlgorithmVisualization(step: _steps[_currentStep])
                       : const Center(
                           child: Text(
                             'No steps yet.\nEnter an array and tap the button!',

@@ -243,7 +243,7 @@ class BinarySearchScreenState extends State<BinarySearchScreen> {
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: _hasSteps
-                      ? algorithmVisualization(_steps[_currentStep])
+                      ? AlgorithmVisualization(step: _steps[_currentStep])
                       : const Center(
                           child: Text(
                             'No steps yet.\nEnter the array & target, then tap the button!',

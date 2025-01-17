@@ -16,14 +16,22 @@ class AlgorithmAppBar extends StatelessWidget implements PreferredSizeWidget {
         icon: Platform.isIOS
             ? const Icon(
                 Icons.arrow_back_ios,
-                size: 50,
+                size: 40,
               )
             : const Icon(
                 Icons.arrow_back,
-                size: 50,
+                size: 40,
               ),
       ),
+      leadingWidth: 64,
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      bottom: PreferredSize(
+        preferredSize: const Size.fromHeight(0.1),
+        child: Container(
+          height: 1.0,
+          color: const Color.fromARGB(33, 66, 66, 66),
+        ),
+      ),
     );
   }
 }

@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:howgorithm/models/destination.dart';
 import 'package:howgorithm/router/routes.dart';
 import 'package:howgorithm/extensions/go_router_location_extension.dart';
+import 'package:howgorithm/widgets/custom_app_bar.dart';
 
 class LayoutScaffoldWithNav extends StatelessWidget {
   const LayoutScaffoldWithNav({super.key, required this.navigationShell});
@@ -11,28 +12,20 @@ class LayoutScaffoldWithNav extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    AppBar appBar;
+    CustomAppBar appBar;
 
     switch (GoRouter.of(context).location) {
       case Routes.homeScreen:
-        appBar = AppBar(
-          title: const Text("HOME"),
-        );
+        appBar = const CustomAppBar(title: "HOME");
         break;
       case Routes.algorithmsScreen:
-        appBar = AppBar(
-          title: const Text("ALGORITHMS"),
-        );
+        appBar = const CustomAppBar(title: "ALGORITHM");
         break;
       case Routes.profileScreen:
-        appBar = AppBar(
-          title: const Text("PROFILE"),
-        );
+        appBar = const CustomAppBar(title: "PROFILE");
         break;
       default:
-        appBar = AppBar(
-          title: const Text(""),
-        );
+        appBar = const CustomAppBar(title: "");
     }
 
     return Scaffold(
