@@ -204,6 +204,7 @@ class _BubbleSortScreenState extends State<BubbleSortScreen> {
                   description:
                       "Bubble Sort repeatedly traverses the list and swaps adjacent elements if they’re out of order.\n On each pass, the largest element “bubbles up” to the end of the list, and after enough passes, the entire list is sorted.\n(O(n²) average time).",
                   iconData: Icons.bubble_chart_outlined,
+                  animation: "assets/animations/bubble3.json",
                   onTap: () {},
                 ),
               ),

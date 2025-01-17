@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 class AlgorithmCard extends StatelessWidget {
-  final String title;
-  final String description;
-  final IconData iconData;
-  final VoidCallback onTap;
-
   const AlgorithmCard({
     super.key,
     required this.title,
     required this.description,
     required this.iconData,
+    required this.animation,
     required this.onTap,
   });
+
+  final String title;
+  final String description;
+  final IconData iconData;
+  final String animation;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -29,11 +32,12 @@ class AlgorithmCard extends StatelessWidget {
             children: [
               Column(
                 children: [
-                  Icon(
-                    iconData,
-                    size: 48,
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
+                  // Icon(
+                  //   iconData,
+                  //   size: 48,
+                  //   color: Theme.of(context).colorScheme.primary,
+                  // ),
+                  Lottie.asset(animation, width: 64, height: 64),
                   Text(
                     title,
                     style: Theme.of(context).textTheme.titleMedium!.copyWith(

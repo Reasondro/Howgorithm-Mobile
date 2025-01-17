@@ -12,24 +12,28 @@ class AlgorithmsScreen extends StatelessWidget {
         'title': 'Bubble Sort',
         'description': 'A simple comparison-based sorting algorithm.',
         'icon': Icons.bubble_chart_outlined,
+        'animation': "assets/animations/bubble3.json",
         'route': Routes.nestedBubbleSortScreen,
       },
       {
         'title': 'Merge Sort',
         'description': 'EMPTY',
         'icon': Icons.merge_outlined,
+        'animation': "assets/animations/merge1.json",
         'route': Routes.nestedMergeSortScreen,
       },
       {
         'title': 'Classical Search',
         'description': 'EMPTY',
         'icon': Icons.search_outlined,
+        'animation': "assets/animations/classical1.json",
         'route': Routes.nestedClassicalSearchScreen,
       },
       {
         'title': 'Binary Search',
         'description': 'Quickly search for an element in a sorted array.',
         'icon': Icons.switch_left_outlined,
+        'animation': "assets/animations/binary1.json",
         'route': Routes.nestedBinarySearchScreen,
       },
     ];
@@ -52,7 +56,7 @@ class AlgorithmsScreen extends StatelessWidget {
                   crossAxisSpacing: 16.0,
                   mainAxisSpacing: 16.0,
                   childAspectRatio: 0.8,
-                  mainAxisExtent: 150),
+                  mainAxisExtent: 170),
               itemCount: algorithms.length,
               itemBuilder: (BuildContext context, int index) {
                 final algorithm = algorithms[index];
@@ -60,6 +64,7 @@ class AlgorithmsScreen extends StatelessWidget {
                   title: algorithm['title'],
                   description: algorithm['description'],
                   iconData: algorithm['icon'],
+                  animation: algorithm['animation'],
                   onTap: () {
                     GoRouter.of(context).push(algorithm['route']);
                   },
