@@ -149,7 +149,6 @@ class _BinarySearchQuizScreenState extends State<BinarySearchQuizScreen> {
   }
 
   void _endQuizAndUpdateDB() {
-    // For example, update supabase
     _updateUserScoreInDB(_score);
     GoRouter.of(context).pop();
   }
