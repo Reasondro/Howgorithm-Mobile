@@ -27,7 +27,13 @@ class ProgressDatabase {
   Future updateProgressBinaryScore(
       Progress oldProgress, int newBinaryScore) async {
     await database
-        .upsert({"binary_score": newBinaryScore}).eq("id", oldProgress.id);
+        .update({"binary_score": newBinaryScore}).eq("id", oldProgress.id);
+  }
+
+  Future updateProgressTotalScore(
+      Progress oldProgress, int newTotalScore) async {
+    await database
+        .update({"total_score": newTotalScore}).eq("id", oldProgress.id);
   }
 
 //? upsert

@@ -3,16 +3,12 @@ import 'package:go_router/go_router.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:howgorithm/router/routes.dart';
 import 'package:lottie/lottie.dart';
-// import your custom widgets if needed
-// import 'package:howgorithm/widgets/quiz_card.dart'; // Or something similar
-// import 'package:howgorithm/router/routes.dart'; // Make sure routes are correct
 
 class QuizzesScreen extends StatelessWidget {
   const QuizzesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // This data mimics your algorithm list, but specifically for quizzes
     final List<Map<String, dynamic>> quizzes = [
       {
         'title': 'Bubble Sort Quiz',
@@ -46,11 +42,9 @@ class QuizzesScreen extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0),
-      // No Scaffold here, as you requested
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // Title / heading
           Text(
             'Ready for a Challenge?',
             style: Theme.of(context).textTheme.titleMedium!.copyWith(
@@ -59,15 +53,12 @@ class QuizzesScreen extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 8),
-
           Text(
             'Select a quiz below to test your knowledge!',
             style: Theme.of(context).textTheme.bodyLarge,
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 24),
-
-          // Carousel of quiz cards
           Expanded(
             child: CarouselSlider(
               items: quizzes.map((quiz) {
