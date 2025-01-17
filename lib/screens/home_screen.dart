@@ -38,8 +38,8 @@ class HomeScreen extends StatelessWidget {
     return Stack(
       children: [
         Positioned.fill(
-          child: Lottie.network(
-            'https://assets9.lottiefiles.com/packages/lf20_3rwasyjy.json',
+          child: Lottie.asset(
+            'assets/animations/home.json',
             fit: BoxFit.cover,
           ),
         ),
