@@ -18,4 +18,19 @@ class Routes {
   static const String nestedClassicalSearchScreen =
       "/algorithms/classical-search";
   static const String nestedBinarySearchScreen = "/algorithms/binary-search";
+
+  static const String bubbleSortQuizScreen = "bubble-sort-quiz";
+  static const String mergeSortSQuizcreen = "merge-sort-quiz";
+
+  static const String classicalSearchQuizScreen = "classical-search-quiz";
+  static const String binarySearchQuizScreen = "binary-search-quiz";
+
+  static const String nestedBubbleSortQuizScreen =
+      "/algorithms/bubble-sort-quiz";
+  static const String nestedMergeSortQuizScreen = "/algorithms/merge-sort-quiz";
+
+  static const String nestedClassicalSearchQuizScreen =
+      "/algorithms/classical-search-quiz";
+  static const String nestedBinarySearchQuizScreen =
+      "/algorithms/binary-search-quiz";
 }

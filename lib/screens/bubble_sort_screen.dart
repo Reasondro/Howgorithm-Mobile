@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:howgorithm/widgets/algorithm_app_bar.dart';
 import 'package:howgorithm/widgets/algorithm_card.dart';
 import 'package:howgorithm/extensions/snackbar_extension.dart';
+import 'package:howgorithm/widgets/algorithm_visualization.dart';
 
 //?? model ngestore tiap snap shot bubble sort nya + description
 class _BubbleSortStep {
@@ -70,7 +71,7 @@ class _BubbleSortScreenState extends State<BubbleSortScreen> {
 
     for (int i = 0; i < arr.length - 1; i++) {
       for (int j = 0; j < arr.length - i - 1; j++) {
-        //? [NEW] highlight the two indices being compared
+        //? [NEW] highlight two indices being compared
         steps.add(_BubbleSortStep(
           List<double>.from(arr),
           'Comparing indices [$j] and [${j + 1}]:\n'
@@ -84,7 +85,7 @@ class _BubbleSortScreenState extends State<BubbleSortScreen> {
           arr[j] = arr[j + 1];
           arr[j + 1] = temp;
 
-          //? [NEW] highlight the same indices after swap
+          //? [NEW] highlight  same indices after swap
           steps.add(_BubbleSortStep(
             List<double>.from(arr),
             'Swapped elements at indices [$j] and [${j + 1}]:\n'
@@ -103,61 +104,8 @@ class _BubbleSortScreenState extends State<BubbleSortScreen> {
     return steps;
   }
 
-  Widget _buildVisualization(_BubbleSortStep step) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              for (int i = 0; i < step.arraySnapshot.length; i++)
-                _buildNumberBox(
-                  value: step.arraySnapshot[i],
-                  isHighlighted: step.highlightIndices.contains(i),
-                ),
-            ],
-          ),
-        ),
-        const SizedBox(height: 10),
-        Text(
-          step.description,
-          style: TextStyle(
-            color: Theme.of(context).colorScheme.onPrimary,
-            fontSize: 16,
-          ),
-          textAlign: TextAlign.center,
-        ),
-      ],
-    );
-  }
-
-  //? [NEW] single colored box for one number
-  Widget _buildNumberBox({required double value, required bool isHighlighted}) {
-    final boxColor = isHighlighted
-        ? Theme.of(context).colorScheme.inversePrimary
-        : Theme.of(context).colorScheme.inverseSurface;
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 4),
-      padding: const EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        color: boxColor,
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Text(
-        value.toString(),
-        style: TextStyle(
-            color: isHighlighted
-                ? Theme.of(context).colorScheme.onSurface
-                : Theme.of(context).colorScheme.onInverseSurface,
-            fontSize: 16,
-            fontWeight: FontWeight.w600),
-      ),
-    );
-  }
-
-  //?? builds Previous/Next buttons + step indicator
+  // TODO modularize this
+  //?? build Previous/Next buttons + step indicator
   Widget _buildControls() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -248,7 +196,7 @@ class _BubbleSortScreenState extends State<BubbleSortScreen> {
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: _hasSteps
-                      ? _buildVisualization(_steps[_currentStep])
+                      ? algorithmVisualization(_steps[_currentStep])
                       : const Center(
                           child: Text(
                             'No steps yet.\nEnter an array and tap the button!',

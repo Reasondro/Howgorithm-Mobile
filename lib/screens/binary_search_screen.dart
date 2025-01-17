@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:howgorithm/widgets/algorithm_app_bar.dart';
 import 'package:howgorithm/widgets/algorithm_card.dart';
 import 'package:howgorithm/extensions/snackbar_extension.dart';
+import 'package:howgorithm/widgets/algorithm_visualization.dart';
+import 'package:howgorithm/widgets/number_box.dart';
 
 // ?? model buat nge store tiap snapshot binary search step nya + description
 class _BinarySearchStep {
@@ -36,59 +38,7 @@ class BinarySearchScreenState extends State<BinarySearchScreen> {
 
   bool get _hasSteps => _steps.isNotEmpty;
 
-  Widget _buildVisualization(_BinarySearchStep step) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              for (int i = 0; i < step.arraySnapshot.length; i++)
-                _buildNumberBox(
-                  value: step.arraySnapshot[i],
-                  isHighlighted: step.highlightIndices.contains(i),
-                ),
-            ],
-          ),
-        ),
-        const SizedBox(height: 12),
-        Text(
-          step.description,
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 16,
-          ),
-          textAlign: TextAlign.center,
-        ),
-      ],
-    );
-  }
-
-  Widget _buildNumberBox({required double value, required bool isHighlighted}) {
-    final boxColor = isHighlighted
-        ? Theme.of(context).colorScheme.inversePrimary
-        : Theme.of(context).colorScheme.inverseSurface;
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 4),
-      padding: const EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        color: boxColor,
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Text(
-        value.toString(),
-        style: TextStyle(
-            color: isHighlighted
-                ? Theme.of(context).colorScheme.onSurface
-                : Theme.of(context).colorScheme.onInverseSurface,
-            fontSize: 16,
-            fontWeight: FontWeight.w600),
-      ),
-    );
-  }
-
+  // TODO modularize this
   Widget _buildControls() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -157,9 +107,6 @@ class BinarySearchScreenState extends State<BinarySearchScreen> {
       context.customShowErrorSnackBar('Please enter a valid target!');
       return;
     }
-
-    // Ideally, check if array is sorted; if not, either sort or warn the user
-    // For now, we assume the user provides a sorted array
 
     _steps = _binarySearchWithSnapshots(doubleList, targetVal);
     _currentStep = 0;
@@ -296,7 +243,7 @@ class BinarySearchScreenState extends State<BinarySearchScreen> {
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: _hasSteps
-                      ? _buildVisualization(_steps[_currentStep])
+                      ? algorithmVisualization(_steps[_currentStep])
                       : const Center(
                           child: Text(
                             'No steps yet.\nEnter the array & target, then tap the button!',
