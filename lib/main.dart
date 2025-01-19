@@ -68,7 +68,7 @@ final ThemeData howgorithmTheme = ThemeData().copyWith(
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-  await dotenv.load(fileName: "dotenv.env");
+  await dotenv.load(fileName: "production.env");
   await Supabase.initialize(
       anonKey: dotenv.env["SUPABASE_ANON_KEY"]!,
       url: dotenv.env["SUPABASE_PROJECT_URL"]!);
