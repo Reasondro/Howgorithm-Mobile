@@ -58,6 +58,8 @@ class _MergeSortScreenState extends State<MergeSortScreen> {
 
     //? reset to  first step
     _currentStep = 0;
+    FocusScope.of(context).unfocus();
+
     setState(() {});
   }
 
@@ -216,8 +218,7 @@ class _MergeSortScreenState extends State<MergeSortScreen> {
                   title: "Merge Sort",
                   description:
                       "Merge Sort is a divide-and-conquer algorithm. It recursively divides the array in half, sorts each half, and then merges the sorted halves.\n(O(n log n) average time).",
-                  animation:
-                      "assets/animations/merge1.json", // You can pick any animation asset
+                  animation: "assets/animations/merge1.json",
                   onTap: () {},
                 ),
               ),

@@ -106,6 +106,7 @@ class BinarySearchScreenState extends State<BinarySearchScreen> {
 
     _steps = _binarySearchWithSnapshots(doubleList, targetVal);
     _currentStep = 0;
+    FocusScope.of(context).unfocus();
     setState(() {});
   }
 

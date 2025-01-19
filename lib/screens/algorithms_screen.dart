@@ -17,14 +17,14 @@ class AlgorithmsScreen extends StatelessWidget {
       },
       {
         'title': 'Merge Sort',
-        'description': 'EMPTY',
+        'description': 'Divide and conquer sorting algorithm.',
         'icon': Icons.merge_outlined,
         'animation': "assets/animations/merge1.json",
         'route': Routes.nestedMergeSortScreen,
       },
       {
         'title': 'Linear Search',
-        'description': 'EMPTY',
+        'description': 'Search each element sequentially.',
         'icon': Icons.search_outlined,
         'animation': "assets/animations/linear5.json",
         'route': Routes.nestedLinearSearchScreen,

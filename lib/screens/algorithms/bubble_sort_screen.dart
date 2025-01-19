@@ -56,6 +56,8 @@ class _BubbleSortScreenState extends State<BubbleSortScreen> {
 
     _steps = _bubbleSortWithSnapshots(doubleList);
     _currentStep = 0;
+    FocusScope.of(context).unfocus();
+
     setState(() {});
   }
 

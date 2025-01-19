@@ -100,6 +100,7 @@ class _LinearSearchScreenState extends State<LinearSearchScreen> {
 
     _steps = _linearSearchWithSnapshots(doubleList, targetVal);
     _currentStep = 0;
+    FocusScope.of(context).unfocus();
     setState(() {});
   }
 
