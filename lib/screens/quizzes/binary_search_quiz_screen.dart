@@ -36,7 +36,7 @@ class _BinarySearchQuizScreenState extends State<BinarySearchQuizScreen> {
   final List<double> _arr = [];
   late double _target;
 
-  int _low = 0;
+  final int _low = 0;
   int _high = 0;
 
   int _score = 0;
@@ -143,8 +143,9 @@ class _BinarySearchQuizScreenState extends State<BinarySearchQuizScreen> {
         _quizFinished = true;
       });
     } else {
-      // We continue
-      setState(() {});
+      setState(() {
+        _quizFinished = false;
+      });
     }
   }
 

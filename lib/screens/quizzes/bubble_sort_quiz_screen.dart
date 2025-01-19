@@ -32,7 +32,7 @@ class _BubbleSortQuizScreenState extends State<BubbleSortQuizScreen> {
   late int _bubbleScore;
   late int _totalScore;
 
-  final List<double> _arr = []; // NEW: random array
+  final List<double> _arr = []; //? place random array
 
   int _score = 0;
   bool _quizFinished = false;
@@ -63,8 +63,6 @@ class _BubbleSortQuizScreenState extends State<BubbleSortQuizScreen> {
         .select("bubble_score,total_score")
         .eq("id", user!.id)
         .single();
-
-    // NEW: Assign to _bubbleScore (instead of _binaryScore)
     _bubbleScore = response["bubble_score"];
     _totalScore = response["total_score"];
   }
@@ -122,12 +120,14 @@ class _BubbleSortQuizScreenState extends State<BubbleSortQuizScreen> {
         _quizFinished = true;
       });
     } else {
-      setState(() {});
+      setState(() {
+        _quizFinished = false;
+      });
     }
   }
 
   void _endQuizAndUpdateDB() {
-    // Update DB with bubble score
+    //? update DB
     _updateUserScoreInDB(_score);
     GoRouter.of(context).pop();
   }

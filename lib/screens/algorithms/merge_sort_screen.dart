@@ -52,15 +52,14 @@ class _MergeSortScreenState extends State<MergeSortScreen> {
         return;
       }
     }
+    setState(() {
+      //?  merge sort steps
+      _steps = _mergeSortWithSnapshots(doubleList);
 
-    //?  merge sort steps
-    _steps = _mergeSortWithSnapshots(doubleList);
-
-    //? reset to  first step
-    _currentStep = 0;
+      //? reset to  first step
+      _currentStep = 0;
+    });
     FocusScope.of(context).unfocus();
-
-    setState(() {});
   }
 
   //? return  list of all intermediate steps during merge sort (the main thing basically)

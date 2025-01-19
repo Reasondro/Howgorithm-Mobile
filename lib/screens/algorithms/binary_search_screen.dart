@@ -104,10 +104,11 @@ class BinarySearchScreenState extends State<BinarySearchScreen> {
       return;
     }
 
-    _steps = _binarySearchWithSnapshots(doubleList, targetVal);
-    _currentStep = 0;
+    setState(() {
+      _steps = _binarySearchWithSnapshots(doubleList, targetVal);
+      _currentStep = 0;
+    });
     FocusScope.of(context).unfocus();
-    setState(() {});
   }
 
   //? return list of steps buat si binary search
