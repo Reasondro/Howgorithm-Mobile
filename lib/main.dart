@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -66,7 +67,7 @@ final ThemeData howgorithmTheme = ThemeData().copyWith(
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-  await dotenv.load(fileName: ".env");
+  await dotenv.load(fileName: "dotenv.env");
   await Supabase.initialize(
       anonKey: dotenv.env["SUPABASE_ANON_KEY"]!,
       url: dotenv.env["SUPABASE_PROJECT_URL"]!);
@@ -103,6 +104,8 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations(
+        [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: 'Howgorithm',

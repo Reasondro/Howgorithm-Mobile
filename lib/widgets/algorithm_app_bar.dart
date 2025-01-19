@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'dart:io' show Platform;
+// import 'dart:io' show Platform;
 
 class AlgorithmAppBar extends StatelessWidget implements PreferredSizeWidget {
   const AlgorithmAppBar({super.key});
@@ -13,15 +13,7 @@ class AlgorithmAppBar extends StatelessWidget implements PreferredSizeWidget {
         onPressed: () {
           GoRouter.of(context).pop();
         },
-        icon: Platform.isIOS
-            ? const Icon(
-                Icons.arrow_back_ios,
-                size: 40,
-              )
-            : const Icon(
-                Icons.arrow_back,
-                size: 40,
-              ),
+        icon: const Icon(Icons.arrow_back_ios),
       ),
       leadingWidth: 64,
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,

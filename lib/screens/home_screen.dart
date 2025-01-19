@@ -45,7 +45,7 @@ class HomeScreen extends StatelessWidget {
         ),
         Positioned.fill(
           child: Container(
-            color: Colors.black38,
+            color: const Color.fromARGB(69, 0, 0, 0),
           ),
         ),
         Center(
@@ -59,17 +59,17 @@ class HomeScreen extends StatelessWidget {
                   child: AnimatedTextKit(
                     repeatForever: true,
                     animatedTexts: [
-                      RotateAnimatedText(
-                        'HOWGORITHM',
-                        textStyle: Theme.of(context)
-                            .textTheme
-                            .titleLarge!
-                            .copyWith(
-                              color:
-                                  Theme.of(context).colorScheme.inversePrimary,
-                              fontWeight: FontWeight.bold,
-                            ),
-                      ),
+                      // RotateAnimatedText(
+                      //   'HOWGORITHM',
+                      //   textStyle: Theme.of(context)
+                      //       .textTheme
+                      //       .titleLarge!
+                      //       .copyWith(
+                      //         color:
+                      //             Theme.of(context).colorScheme.inversePrimary,
+                      //         fontWeight: FontWeight.bold,
+                      //       ),
+                      // ),
                       RotateAnimatedText(
                         'Explore & Learn',
                         textStyle:
@@ -80,6 +80,38 @@ class HomeScreen extends StatelessWidget {
                       ),
                       RotateAnimatedText(
                         'Master Algorithms',
+                        textStyle:
+                            Theme.of(context).textTheme.titleMedium!.copyWith(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                      ),
+                      RotateAnimatedText(
+                        'Accelerate problem-solving',
+                        textStyle:
+                            Theme.of(context).textTheme.titleMedium!.copyWith(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                      ),
+                      RotateAnimatedText(
+                        'Level up your logic',
+                        textStyle:
+                            Theme.of(context).textTheme.titleMedium!.copyWith(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                      ),
+                      RotateAnimatedText(
+                        'Unlock deeper insights',
+                        textStyle:
+                            Theme.of(context).textTheme.titleMedium!.copyWith(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                      ),
+                      RotateAnimatedText(
+                        'Advance algorithmic thinking',
                         textStyle:
                             Theme.of(context).textTheme.titleMedium!.copyWith(
                                   color: Colors.white,

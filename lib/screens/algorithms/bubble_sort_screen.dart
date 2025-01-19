@@ -84,8 +84,6 @@ class _BubbleSortScreenState extends State<BubbleSortScreen> {
           final temp = arr[j];
           arr[j] = arr[j + 1];
           arr[j + 1] = temp;
-
-          //? [NEW] highlight  same indices after swap
           steps.add(_BubbleSortStep(
             List<double>.from(arr),
             'Swapped elements at indices [$j] and [${j + 1}]:\n'

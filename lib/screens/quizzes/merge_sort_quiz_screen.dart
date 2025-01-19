@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:howgorithm/widgets/algorithm_app_bar.dart';
+import 'dart:io' show Platform;
 
 class MergeSortQuizScreen extends StatefulWidget {
   const MergeSortQuizScreen({super.key});
