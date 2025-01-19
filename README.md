@@ -1,6 +1,6 @@
-# Howgorithms
+# Howgorithm
 
-**Howgorithms** adalah aplikasi mobile (Flutter) yang menyediakan **visualisasi** dan **pemahaman mendalam** mengenai berbagai algoritma klasik, seperti **Bubble Sort**, **Merge Sort**, **Binary Search**, dan **Classical Search**. Selain itu, aplikasi ini juga dilengkapi dengan **kuis interaktif** untuk menguji pemahaman pengguna terhadap setiap algoritma.
+**Howgorithm** adalah aplikasi mobile (Flutter) yang menyediakan **visualisasi** dan **pemahaman mendalam** mengenai berbagai algoritma klasik, seperti **Bubble Sort**, **Merge Sort**, **Binary Search**, dan **Classical Search**. Selain itu, aplikasi ini juga dilengkapi dengan **kuis interaktif** untuk menguji pemahaman pengguna terhadap setiap algoritma.
 
 ---
 
@@ -20,7 +20,7 @@
    - Tersedia tombol **Sign out** untuk keluar dari akun.
 
 4. **Tampilan Home & Algoritma**  
-   - **Home Screen** menghadirkan animasi Lottie dan teks animasi (via `animated_text_kit`) untuk memperkenalkan Howgorithms secara ringkas dan menarik.  
+   - **Home Screen** menghadirkan animasi Lottie dan teks animasi (via `animated_text_kit`) untuk memperkenalkan Howgorithm secara ringkas dan menarik.  
    - **Algorithms Screen** menampilkan daftar algoritma (Bubble Sort, Merge Sort, Binary Search, dsb.) yang tersedia untuk dipelajari, disertai kartu informasi dan link ke halaman masing-masing algoritma.
 
 ---
@@ -89,10 +89,6 @@ lib/
 
 - **Flutter** (Dart)  
 - **Supabase** (untuk otentikasi & database)  
-- **GoRouter** (untuk navigasi)  
-- **animated_text_kit** (animasi teks di HomeScreen)  
-- **lottie** (animasi Lottie di HomeScreen)  
-
 ---
 
 ## Contributing
@@ -110,6 +106,6 @@ Proyek ini dilisensikan di bawah [MIT License](LICENSE). Anda bebas memodifikasi
 
 ---
 
-**Selamat belajar dan bereksplorasi dengan Howgorithms!**  
+**Selamat belajar dan bereksplorasi dengan Howgorithm!**  
 Jika Anda memiliki pertanyaan atau saran, jangan ragu untuk membuat _issue_ atau berkontribusi langsung.
 
