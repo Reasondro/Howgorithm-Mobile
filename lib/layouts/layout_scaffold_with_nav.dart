@@ -19,13 +19,13 @@ class LayoutScaffoldWithNav extends StatelessWidget {
         appBar = const CustomAppBar(title: "HOWGORITHM");
         break;
       case Routes.algorithmsScreen:
-        appBar = const CustomAppBar(title: "ALGORITHM");
+        appBar = const CustomAppBar(title: "Algorithm");
         break;
       case Routes.quizzesScreen:
-        appBar = const CustomAppBar(title: "QUIZZES");
+        appBar = const CustomAppBar(title: "Quizzes");
         break;
       case Routes.profileScreen:
-        appBar = const CustomAppBar(title: "PROFILE");
+        appBar = const CustomAppBar(title: "Profile");
         break;
       default:
         appBar = const CustomAppBar(title: "");

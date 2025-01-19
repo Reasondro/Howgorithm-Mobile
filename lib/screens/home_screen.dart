@@ -45,13 +45,16 @@ class HomeScreen extends StatelessWidget {
         ),
         Positioned.fill(
           child: Container(
-            color: const Color.fromARGB(69, 0, 0, 0),
+            color: const Color.fromARGB(43, 0, 0, 0),
+            // color: const Color.fromARGB(69, 0, 0, 0),
           ),
         ),
         Center(
           child: Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Column(
+            child:
+                //  TODO change to list view, and add more content
+                Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(
@@ -59,23 +62,11 @@ class HomeScreen extends StatelessWidget {
                   child: AnimatedTextKit(
                     repeatForever: true,
                     animatedTexts: [
-                      // RotateAnimatedText(
-                      //   'HOWGORITHM',
-                      //   textStyle: Theme.of(context)
-                      //       .textTheme
-                      //       .titleLarge!
-                      //       .copyWith(
-                      //         color:
-                      //             Theme.of(context).colorScheme.inversePrimary,
-                      //         fontWeight: FontWeight.bold,
-                      //       ),
-                      // ),
                       RotateAnimatedText(
                         'Explore & Learn',
                         textStyle:
                             Theme.of(context).textTheme.titleMedium!.copyWith(
                                   color: Colors.white,
-                                  fontWeight: FontWeight.bold,
                                 ),
                       ),
                       RotateAnimatedText(

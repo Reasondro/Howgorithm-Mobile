@@ -23,11 +23,11 @@ class AlgorithmsScreen extends StatelessWidget {
         'route': Routes.nestedMergeSortScreen,
       },
       {
-        'title': 'Classical Search',
+        'title': 'Linear Search',
         'description': 'EMPTY',
         'icon': Icons.search_outlined,
-        'animation': "assets/animations/classical5.json",
-        'route': Routes.nestedClassicalSearchScreen,
+        'animation': "assets/animations/linear5.json",
+        'route': Routes.nestedLinearSearchScreen,
       },
       {
         'title': 'Binary Search',

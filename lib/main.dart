@@ -8,6 +8,7 @@ import 'package:howgorithm/router/routing_service.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
+// TODO make dark color theme work with this hsit
 final ColorScheme howgorithmColorTheme = ColorScheme.fromSeed(
     seedColor: const Color.fromARGB(255, 61, 100, 162),
     brightness: Brightness.light);

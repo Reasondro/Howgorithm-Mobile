@@ -25,11 +25,11 @@ class QuizzesScreen extends StatelessWidget {
         'route': Routes.nestedMergeSortQuizScreen
       },
       {
-        'title': 'Classical Search Quiz',
-        'description': 'Check your classical search algorithms knowledge!',
+        'title': 'Linear Search Quiz',
+        'description': 'Check your linear search algorithms knowledge!',
         'icon': Icons.search_outlined,
-        'animation': "assets/animations/classical5.json",
-        'route': Routes.nestedClassicalSearchQuizScreen
+        'animation': "assets/animations/linear5.json",
+        'route': Routes.nestedLinearSearchQuizScreen
       },
       {
         'title': 'Binary Search Quiz',
@@ -69,7 +69,6 @@ class QuizzesScreen extends StatelessWidget {
                       description: quiz['description'],
                       animation: quiz['animation'],
                       onTap: () {
-                        // Navigate to the quiz route
                         GoRouter.of(context).push(quiz['route']);
                       },
                     );
@@ -77,15 +76,15 @@ class QuizzesScreen extends StatelessWidget {
                 );
               }).toList(),
               options: CarouselOptions(
-                height: double.infinity, // Fill available vertical space
-                enlargeCenterPage: true, // Center the "active" card
-                enableInfiniteScroll: true, // Loop through items
-                autoPlay: true, // Auto-scroll
+                height: double.infinity, //? fill available vertical space
+                enlargeCenterPage: true, //? centre the "active" card
+                enableInfiniteScroll: true, //? loop through items
+                autoPlay: true, //? auto-scrool
                 autoPlayInterval: const Duration(seconds: 4),
                 autoPlayAnimationDuration: const Duration(milliseconds: 800),
                 pauseAutoPlayOnTouch: true,
                 viewportFraction:
-                    0.8, // Size of each card (80% of screen width)
+                    0.8, //? size of each card (i.e.80% of screen width)
               ),
             ),
           ),
@@ -95,7 +94,6 @@ class QuizzesScreen extends StatelessWidget {
   }
 }
 
-/// A fancy quiz card inside the carousel
 class _QuizCard extends StatelessWidget {
   final String title;
   final String description;
@@ -116,10 +114,10 @@ class _QuizCard extends StatelessWidget {
       onTap: onTap,
       borderRadius: BorderRadius.circular(12),
       child: Container(
-        // Height is determined by the Carousel; you can tweak styling below
+        //? height is determined by  Carousel
         margin: const EdgeInsets.symmetric(vertical: 12.0),
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.surface,
+          color: Theme.of(context).colorScheme.primaryContainer,
           borderRadius: BorderRadius.circular(16),
           boxShadow: const [
             BoxShadow(

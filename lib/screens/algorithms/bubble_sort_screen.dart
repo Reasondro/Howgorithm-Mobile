@@ -66,7 +66,7 @@ class _BubbleSortScreenState extends State<BubbleSortScreen> {
 
     steps.add(_BubbleSortStep(
       List<double>.from(arr),
-      'Initial array:\n${arr.join(", ")}',
+      'Initial array:\n[${arr.join(", ")}]',
     ));
 
     for (int i = 0; i < arr.length - 1; i++) {
@@ -102,7 +102,6 @@ class _BubbleSortScreenState extends State<BubbleSortScreen> {
     return steps;
   }
 
-  // TODO modularize this
   //?? build Previous/Next buttons + step indicator
   Widget _buildControls() {
     return Row(
@@ -155,7 +154,6 @@ class _BubbleSortScreenState extends State<BubbleSortScreen> {
                   title: "Bubble Sort",
                   description:
                       "Bubble Sort repeatedly traverses the list and swaps adjacent elements if they’re out of order.\n On each pass, the largest element “bubbles up” to the end of the list, and after enough passes, the entire list is sorted.\n(O(n²) average time).",
-                  // iconData: Icons.bubble_chart_outlined,
                   animation: "assets/animations/bubble3.json",
                   onTap: () {},
                 ),

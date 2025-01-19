@@ -4,53 +4,51 @@ import 'package:howgorithm/widgets/algorithm_card.dart';
 import 'package:howgorithm/extensions/snackbar_extension.dart';
 import 'package:howgorithm/widgets/algorithm_visualization.dart';
 
-// ?? model buat nge store tiap snapshot binary search step nya + description
-class _BinarySearchStep {
+// ? model for linear search steps
+class _LinearSearchStep {
   final List<double> arraySnapshot;
   final String description;
 
+  //? indices to highlight (e.g. cman si  [i])
   final List<int> highlightIndices;
 
-  _BinarySearchStep(
+  _LinearSearchStep(
     this.arraySnapshot,
     this.description, {
     this.highlightIndices = const [],
   });
 }
 
-class BinarySearchScreen extends StatefulWidget {
-  const BinarySearchScreen({super.key});
+class LinearSearchScreen extends StatefulWidget {
+  const LinearSearchScreen({super.key});
 
   @override
-  State<StatefulWidget> createState() {
-    return BinarySearchScreenState();
-  }
+  State<LinearSearchScreen> createState() => _LinearSearchScreenState();
 }
 
-class BinarySearchScreenState extends State<BinarySearchScreen> {
+class _LinearSearchScreenState extends State<LinearSearchScreen> {
   final TextEditingController _arrayController = TextEditingController();
   final TextEditingController _targetController = TextEditingController();
 
-  List<_BinarySearchStep> _steps = [];
+  List<_LinearSearchStep> _steps = [];
   int _currentStep = 0;
 
   bool get _hasSteps => _steps.isNotEmpty;
 
-  // TODO modularize this
   Widget _buildControls() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         ElevatedButton.icon(
-            onPressed: _hasSteps && _currentStep > 0
-                ? () {
-                    setState(() {
-                      _currentStep--;
-                    });
-                  }
-                : null,
-            label: const Icon(Icons.skip_previous_outlined, size: 40)),
-        //? step indicator
+          onPressed: _hasSteps && _currentStep > 0
+              ? () {
+                  setState(() {
+                    _currentStep--;
+                  });
+                }
+              : null,
+          label: const Icon(Icons.skip_previous_outlined, size: 40),
+        ),
         if (_hasSteps)
           Text(
             'Step $_currentStep of ${_steps.length - 1}',
@@ -66,13 +64,13 @@ class BinarySearchScreenState extends State<BinarySearchScreen> {
                   });
                 }
               : null,
-          label: const Icon(Icons.skip_next_outlined, size: 40), //? empty
+          label: const Icon(Icons.skip_next_outlined, size: 40),
         ),
       ],
     );
   }
 
-  //? parse inputs, then run step-by-step binary  search nya
+  //? parse inputs, then run step-by-step Linear search
   void _computeSteps() {
     final rawArray = _arrayController.text.trim();
     final rawTarget = _targetController.text.trim();
@@ -82,7 +80,6 @@ class BinarySearchScreenState extends State<BinarySearchScreen> {
       return;
     }
 
-    //? parse arr
     final parts = rawArray.split(',');
     final doubleList = <double>[];
     for (var p in parts) {
@@ -94,82 +91,64 @@ class BinarySearchScreenState extends State<BinarySearchScreen> {
         return;
       }
     }
-    // ? sort for dumb users
-    doubleList.sort();
 
-    //? parase target
     final targetVal = double.tryParse(rawTarget);
     if (targetVal == null) {
       context.customShowErrorSnackBar('Please enter a valid target!');
       return;
     }
 
-    _steps = _binarySearchWithSnapshots(doubleList, targetVal);
+    _steps = _linearSearchWithSnapshots(doubleList, targetVal);
     _currentStep = 0;
     setState(() {});
   }
 
-  //? return list of steps buat si binary search
-  List<_BinarySearchStep> _binarySearchWithSnapshots(
-      List<double> inputArray, double target) {
-    final steps = <_BinarySearchStep>[];
+  //? return list of linear search
+  List<_LinearSearchStep> _linearSearchWithSnapshots(
+    List<double> arr,
+    double target,
+  ) {
+    final steps = <_LinearSearchStep>[];
 
-    //? again buat copy
-    final arr = List<double>.from(inputArray);
-
-    int low = 0;
-    int high = arr.length - 1;
-
-    //? initialiation step
-    steps.add(_BinarySearchStep(
-      List<double>.from(arr),
-      'Initial:\nlow=0, mid=${(0 + (arr.length - 1 - 0) ~/ 2)}, high=${arr.length - 1}',
-      highlightIndices: [],
-    ));
-
-    while (low <= high) {
-      final mid = (low + high) ~/ 2;
-
-      //? step => highlighting mid
-      steps.add(_BinarySearchStep(
+    //? first step ➡️ show the initial array
+    steps.add(
+      _LinearSearchStep(
         List<double>.from(arr),
-        'Checking mid index [$mid]:\n${arr[mid]}',
-        highlightIndices: [mid],
-      ));
+        'Initial array:\n[${arr.join(", ")}]',
+      ),
+    );
 
-      if (arr[mid] == target) {
-        steps.add(_BinarySearchStep(
+    for (int i = 0; i < arr.length; i++) {
+      // ?  highlighting index i
+      steps.add(
+        _LinearSearchStep(
           List<double>.from(arr),
-          'Found $target at index [$mid]',
-          highlightIndices: [mid],
-        ));
-        return steps; //? bisa stop here
-      } else if (arr[mid] < target) {
-        // ?search right
-        steps.add(_BinarySearchStep(
-          List<double>.from(arr),
-          '${arr[mid]} < $target, so search right:\nlow=${mid + 1}, mid=${mid + 1 + (high - (mid + 1)) ~/ 2}, high=$high',
-          highlightIndices: [mid],
-        ));
-        low = mid + 1;
-      } else {
-        //? search left
-        steps.add(_BinarySearchStep(
-          List<double>.from(arr),
-          '${arr[mid]} > $target, so search left:\nlow=$low, mid=${low + ((mid - 1) - low) ~/ 2} , high=${mid - 1}',
-          highlightIndices: [mid],
-        ));
-        high = mid - 1;
+          'Comparing arr[$i] = ${arr[i]} with $target',
+          highlightIndices: [i],
+        ),
+      );
+
+      if (arr[i] == target) {
+        // ? found
+        steps.add(
+          _LinearSearchStep(
+            List<double>.from(arr),
+            'Found $target at index [$i]',
+            highlightIndices: [i],
+          ),
+        );
+        return steps;
       }
     }
 
-    //? if  exit  while loop, targetnot found
-    steps.add(_BinarySearchStep(
-      List<double>.from(arr),
-      '$target not found in the array!',
-      highlightIndices: [],
-    ));
-
+    //?  ff  finish the loop but not found
+    steps.add(
+      _LinearSearchStep(
+        List<double>.from(arr),
+        '$target not found in the array!',
+        highlightIndices: [],
+      ),
+    );
     return steps;
   }
 
@@ -186,12 +165,12 @@ class BinarySearchScreenState extends State<BinarySearchScreen> {
               SizedBox(
                 width: double.infinity,
                 child: AlgorithmCard(
-                  title: "Binary Search",
+                  title: "Linear Search",
                   description:
-                      "Binary Search halves the search space each time.\n"
-                      "It requires a sorted array and compares the target with the middle element.\n"
-                      "(O(log n) average time).",
-                  animation: "assets/animations/binary8.json",
+                      "A simple linear search that checks each element one by one,\n"
+                      "until the target is found (or not found at all).\n"
+                      "(O(n) average time).",
+                  animation: "assets/animations/linear5.json",
                   onTap: () {},
                 ),
               ),
@@ -201,10 +180,11 @@ class BinarySearchScreenState extends State<BinarySearchScreen> {
                 decoration: const InputDecoration(
                   labelText: 'Enter an array (comma-separated)',
                   border: OutlineInputBorder(),
-                  hintText: 'e.g. 1,3,4,7,11,12',
+                  hintText: 'e.g. 5,3,7,9,11',
                 ),
               ),
               const SizedBox(height: 12),
+
               TextField(
                 controller: _targetController,
                 decoration: const InputDecoration(
@@ -214,14 +194,17 @@ class BinarySearchScreenState extends State<BinarySearchScreen> {
                 ),
               ),
               const SizedBox(height: 16),
+
+              // Compute steps button
               ElevatedButton(
                 style: ButtonStyle(
                   backgroundColor: WidgetStatePropertyAll(
-                      Theme.of(context).colorScheme.inverseSurface),
+                    Theme.of(context).colorScheme.inverseSurface,
+                  ),
                 ),
                 onPressed: _computeSteps,
                 child: Text(
-                  'Compute Binary Search Steps',
+                  'Compute Linear Search Steps',
                   style: TextStyle(
                     fontSize: 14,
                     color: Theme.of(context).colorScheme.inversePrimary,
@@ -230,6 +213,8 @@ class BinarySearchScreenState extends State<BinarySearchScreen> {
                 ),
               ),
               const SizedBox(height: 16),
+
+              // Visualization
               Expanded(
                 child: Container(
                   width: double.infinity,

@@ -77,7 +77,7 @@ flutter:
     - assets/images/default-profile.png
     - assets/animations/bubble3.json
     - assets/animations/merge1.json
-    - assets/animations/classical5.json
+    - assets/animations/linear5.json
     - assets/animations/binary8.json
     - assets/animations/home.json
 

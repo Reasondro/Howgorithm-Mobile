@@ -4,7 +4,7 @@ import 'package:howgorithm/screens/algorithms_screen.dart';
 import 'package:howgorithm/screens/auth_screen.dart';
 import 'package:howgorithm/screens/algorithms/binary_search_screen.dart';
 import 'package:howgorithm/screens/algorithms/bubble_sort_screen.dart';
-import 'package:howgorithm/screens/algorithms/classical_search_screen.dart';
+import 'package:howgorithm/screens/algorithms/linear_search_screen.dart';
 
 import 'package:howgorithm/screens/home_screen.dart';
 import 'package:howgorithm/screens/algorithms/merge_sort_screen.dart';
@@ -14,7 +14,7 @@ import 'package:howgorithm/router/routes.dart';
 import 'package:howgorithm/screens/quizzes_screen.dart';
 import 'package:howgorithm/screens/quizzes/binary_search_quiz_screen.dart';
 import 'package:howgorithm/screens/quizzes/bubble_sort_quiz_screen.dart';
-import 'package:howgorithm/screens/quizzes/classical_search_quiz_screen.dart';
+import 'package:howgorithm/screens/quizzes/linear_search_quiz_screen.dart';
 import 'package:howgorithm/screens/quizzes/merge_sort_quiz_screen.dart';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -90,11 +90,11 @@ class RoutingService {
                   },
                 ),
                 GoRoute(
-                  name: "Classical Search",
+                  name: "Linear Search",
                   parentNavigatorKey: _rootNavigatorKey,
-                  path: Routes.classicalSearchScreen,
+                  path: Routes.linearSearchScreen,
                   builder: (context, state) {
-                    return const ClassicalSearchScreen();
+                    return const LinearSearchScreen();
                   },
                 ),
                 GoRoute(
@@ -131,11 +131,11 @@ class RoutingService {
                     },
                   ),
                   GoRoute(
-                    name: "Classical Search Quiz",
+                    name: "Linear Search Quiz",
                     parentNavigatorKey: _rootNavigatorKey,
-                    path: Routes.classicalSearchQuizScreen,
+                    path: Routes.linearSearchQuizScreen,
                     builder: (context, state) {
-                      return const ClassicalSearchQuizScreen();
+                      return const LinearSearchQuizScreen();
                     },
                   ),
                   GoRoute(
